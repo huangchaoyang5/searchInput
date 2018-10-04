@@ -1,22 +1,24 @@
 # searchInput
+==================================================
 
+```
 <script type="text/javascript">
-        $('#companyDiv').searchInput({
-            titleHtml: '公司別: ',
-            inputID: 'company',
-            inputName: 'company',
-            hasAjax: true,
-            ajaxUrl: '/API/getCompanyName.aspx?CompanyName='
-        });
-
-        $('#addressDiv').searchInput({
+	$('#companyDiv').searchInput({
+	   titleHtml: '公司別: ',
+	   inputID: 'company',
+	   inputName: 'company',
+	   hasAjax: true,
+	   ajaxUrl: '/API/getCompanyName.aspx?CompanyName='
+	});
+	
+	$('#addressDiv').searchInput({
             titleHtml: '<div>姓名</div>',
             inputID: 'name',
             inputName: 'name',
             inputResultStyle: 'max-height:300px;'
         });
-
-        $('#notitleDiv').searchInput({
+	
+	$('#notitleDiv').searchInput({
             titleHtml: '地址 ',
             inputPlaceholder: '城市和區域',
             inputID: 'address',
@@ -26,4 +28,5 @@
             onSelectedColorCode: 'lightblue',
             taiwanCity: true
         });
-   </script>
+</script>
+```
