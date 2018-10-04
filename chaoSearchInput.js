@@ -1,4 +1,6 @@
-/* Copyright 2018 chaoyang huang   */
+/* Copyright 2018 chaoyang huang   
+*　source code link ==> https://github.com/huangchaoyang5/searchInput
+*/
 
        if (typeof String.prototype.trim !== 'function') {
             String.prototype.trim = function () {
