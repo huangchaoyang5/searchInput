@@ -2,6 +2,10 @@
 ==================================================
 
 ```
+<div id="companyDiv"></div>
+<div id="addressDiv"></div>
+<div id="notitleDiv"></div>
+    
 <script type="text/javascript">
 	$('#companyDiv').searchInput({
 	   titleHtml: '公司別: ',
