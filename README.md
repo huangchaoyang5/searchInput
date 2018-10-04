@@ -1,6 +1,9 @@
 # searchInput
 ==================================================
 
+1. using html5
+2. tested jquery version is jquery-1.10.2.min.js and tested on chrom, firefox, and ie10+
+
 ```
 <div id="companyDiv"></div>
 <div id="addressDiv"></div>
