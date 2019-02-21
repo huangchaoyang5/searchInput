@@ -168,7 +168,6 @@ if (!Array.prototype.filter) {
             var resultTag = document.getElementById(this.id + 'Result');
 
             //hit enter
-            console.log(this);
             if (charCode == 13 && $(resultTag).is(":visible")) {
                 var onSelected = $(this).find("div.onSelected");
                 if (onSelected.length != 0) {
