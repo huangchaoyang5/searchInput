@@ -126,7 +126,7 @@
                 }
 
 
-                eleInputResult.style.position = 'absolute';
+                //eleInputResult.style.position = 'absolute';
                 eleInputResult.style.display = 'none';
                 eleInputResult.style.overflowY = 'auto';
                 eleInputResult.style.maxHeight = '180px';
