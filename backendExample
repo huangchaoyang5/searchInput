@@ -1,0 +1,94 @@
+<%@ Page  Language="vb" ContentType="application/json; charset=utf-8"  %>
+<%@ OutputCache Duration="1" VaryByParam="*"  %>
+<%@ Import NameSpace="System.Configuration" %>
+<%@ Import NameSpace="System.IO" %>
+<%@ Import NameSpace="System.Data.sqlclient" %>
+<%@ Import NameSpace="eVistualFunction.Grid_Function" %>
+<%@ Import Namespace="System.Xml"  %>
+<%@ Import Namespace="System.Configuration"  %>
+<%@ Import Namespace="Newtonsoft.Json"  %>
+
+<script runat="server">
+    
+    Sub Page_Load(ByVal Sender As Object, ByVal E As EventArgs)
+
+        ' 定義自己所使用的Name Space
+        Dim V7IdeaObj As eVistualFunction.Grid_Function = New eVistualFunction.Grid_Function
+        V7IdeaObj.MyPage = Me
+        
+        ' 定義資料庫會用的相關元件設定
+        Dim NewConnection As SqlConnection  ' 宣告新的SQL Connection
+        Dim RS As SqlCommand   ' 宣告新的SqlCommand 類別
+        Dim DBConnectionString As String
+        Dim RSReader As SqlDataReader
+        Dim SQL As String = ""
+        
+        DBConnectionString = Application("NewConn_ConnectionString").ToString()
+        
+        '取得傳入的資料
+        Dim CommodityName As String = V7IdeaObj.CheckRequestData("CommodityName")
+        Dim ResultString As String = ""
+        Dim OrgName As List(Of String) = New List(Of String)
+        Dim OrgMemo As String = ""
+        
+        If CommodityName <> "" Then
+           
+            Dim search = String.Join("%", CommodityName.Select(Function(c) c.ToString).ToArray)
+            Dim rev As String = String.Join("%", CommodityName.Reverse().Select(Function(c) c.ToString).ToArray)
+            Dim whereSearchText = String.Join(" or ", CommodityName.Select(Function(c) "Name like '%" & c & "%'"))
+            Dim orderbyCnt As Integer = 1
+            Dim orderByText = "when Name = '" & CommodityName & "' then " & orderbyCnt & " "
+            orderbyCnt += 1
+            orderByText += "when Name like '" & CommodityName & "%' then " & orderbyCnt & " "
+            orderbyCnt += 1
+            orderByText += "when Name like '%" & CommodityName & "%' then " & orderbyCnt & " "
+            orderbyCnt += 1
+            orderByText += "when Name like '%" & search & "%' then " & orderbyCnt & " "
+            orderbyCnt += 1
+            orderByText += "when Name = '" & StrReverse(CommodityName) & "' then " & orderbyCnt & " "
+            orderbyCnt += 1
+            orderByText += "when Name like '" & StrReverse(CommodityName) & "%' then " & orderbyCnt & " "
+            orderbyCnt += 1
+            orderByText += "when Name like '%" & StrReverse(CommodityName) & "%' then " & orderbyCnt & " "
+            orderbyCnt += 1
+            orderByText += "when Name like '%" & rev & "%' then " & orderbyCnt & " "
+            
+            Dim reduceString = CommodityName
+            Do Until reduceString.Length <= 0
+                orderbyCnt += 1
+                orderByText += "when " & String.Join(" and ", reduceString.Select(Function(c) "CHARINDEX('" & c & "', Name) > 0")) & " then " & orderbyCnt & " "
+                If reduceString.Length = 1 Then
+                    Exit Do
+                End If
+                reduceString = reduceString.Substring(0, reduceString.Length - 1)
+            Loop
+			
+            orderbyCnt += 1
+            orderByText += "else " & orderbyCnt & " "
+            
+            SQL = String.Format("select top(30) Name from Commodity where IfDelete = '0' And ({0}) order by case {1} end", whereSearchText, orderByText)
+            
+            NewConnection = New SqlConnection(DBConnectionString)
+            NewConnection.Open()
+            
+            RS = New SqlCommand(SQL, NewConnection)
+            RSReader = RS.ExecuteReader
+            
+            While RSReader.Read
+                OrgName.Add(RSReader(0).ToString)
+            End While
+            
+            RSReader.Close()
+            RS.Dispose()
+            NewConnection.Close()
+            
+            ResultString = JsonConvert.SerializeObject(OrgName)
+            ResultString = ResultString.Replace("""@", """")
+            
+        End If
+        
+        Response.Write(ResultString)
+        
+    End Sub
+
+</script>
