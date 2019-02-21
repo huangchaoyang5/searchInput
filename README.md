@@ -5,9 +5,9 @@
 2. tested jquery version is jquery-1.10.2.min.js and tested on chrom, firefox, and ie10+
 
 ```
-<div id="companyDiv"></div>
-<div id="addressDiv"></div>
-<div id="notitleDiv"></div>
+<div id="companyDiv" style="float: left; position: relative"></div>
+<div id="addressDiv" style="float: left; position: relative"></div>
+<div id="notitleDiv" style="float: left; position: relative"></div>
     
 <script type="text/javascript">
 	$('#companyDiv').searchInput({
