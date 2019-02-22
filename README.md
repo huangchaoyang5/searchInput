@@ -22,6 +22,7 @@
             titleHtml: '<div>姓名</div>',
             inputID: 'name',
             inputName: 'name',
+	    inputValue: 'myName',  // inputValue: '' same as not declare
             inputResultStyle: 'max-height:300px;'
         });
 	
