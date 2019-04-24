@@ -62,6 +62,7 @@ if (!Array.prototype.filter) {
             inputName: '',                             //search input tag name
             inputPlaceholder: '',
             inputStyle: '',                            //search input append or overwirte default style
+            inputRequired: false,                      //search input become Required
             inputValue: '',                            //search input overwirte value
             inputResultStyle: '',                      //search result div append or overwirte default style
             onSelectedColorCode: '#f0e0e0',            //display color when hover the reuslt data
@@ -105,6 +106,7 @@ if (!Array.prototype.filter) {
         eleInput.style.display = 'inline-block';
         eleInput.style.cssText += ';' + opts.inputStyle;
         eleInput.value = opts.inputValue;
+        eleInput.required = opts.inputRequired;
         $(this).append(eleInput);
 
         $(this).append("<br />");  //make div result under the input for ie browser
