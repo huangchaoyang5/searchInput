@@ -68,7 +68,7 @@ if (!Array.prototype.filter) {
             onSelectedColorCode: '#f0e0e0',            //display color when hover the reuslt data
             hasAjax: false,                            //if true then get search result data by $.getJSON return list of string
             ajaxUrl: '',                               //input value will be assigned after = when calling this prototype ex: /{path}/{pageName}?{parameter}=
-            taiwanCity: false                          //if true then default method (search taiwan city and area) eventhough hasAjax parameter become true
+            taiwanCity: false                          //if true then default method (search taiwan city and area) eventhough hasAjax parameter become true (P.S if ajaUrl is filled, find road and street by ajax)
         };
 
         var opts = $.extend({}, defaults, opts);
@@ -337,74 +337,87 @@ if (!Array.prototype.filter) {
                 if (datas.length > 0) {
                     $(resultTag).show();
                     $(resultTag).scrollTop(0);
-                }
+                } else {
+                    //find address name if city and area are exist by ajax call                   
+                    if (opts.ajaxUrl.length > 0 && obj.value.trim().length >= 6) {
 
+                        $.getJSON(opts.ajaxUrl + encodeURI(obj.value.trim()), null, function (datas) {
+
+                            if (datas == "" || datas == null) {
+                                $(resultTag).hide();
+                            } else {
+                                appendAjaxHint(obj, datas, isFirst, resultTag);
+                            }
+
+                        });
+                    }
+                }
             } else if (opts.hasAjax) {
 
                 $.getJSON(opts.ajaxUrl + encodeURI(obj.value.trim()), null, function (datas) {
-
                     if (datas == "" || datas == null) {
                         $(resultTag).hide();
                     } else {
-
-                        var thisValue = obj.value.trim()
-                        var searchVal = "";
-                        for (var i = 0; i < thisValue.length; i++) {
-                            if (thisValue.charCodeAt(i) > 65280 && thisValue.charCodeAt(i) < 65375)
-                                searchVal += String.fromCharCode(thisValue.charCodeAt(i) - 65248);
-                            else
-                                searchVal += String.fromCharCode(thisValue.charCodeAt(i))
-                        }
-
-                        $.each(datas, function (key, value) {
-
-                            var strArray = value.split('');
-                            var afterMap = jQuery.map(strArray, function (x) {
-                                var matchText = searchVal.match(new RegExp(RegExp.quote(x), 'i'));
-                                if (matchText !== null) {
-                                    return '<font style=color:red>' + x + '</font>';
-                                }
-                                else
-                                    return x;
-                            }).join('');
-
-
-                            var div = document.createElement('div');
-                            div.style.cursor = 'pointer';
-                            div.style.padding = '4px';
-                            div.style.borderBottomStyle = 'solid';
-                            div.style.borderBottomWidth = 'thin';
-                            div.innerHTML = afterMap;
-                            if (isFirst) {
-                                div.className = 'onSelected';
-                                isFirst = false;
-                            }
-                            div.onmousedown = function () {
-                                obj.value = this.innerText.trim();
-                                $(resultTag).hide();
-                            };
-                            div.onmouseover = function () {
-                                var addressDiv = resultTag.getElementsByTagName('div');
-                                for (var i = 0; i < addressDiv.length; i++) {
-                                    addressDiv[i].className = '';
-                                }
-                                this.className = 'onSelected';
-                            };
-
-                            resultTag.appendChild(div);
-
-                        });
-
-                        if (datas.length > 0) {
-                            $(resultTag).show();
-                            $(resultTag).scrollTop(0);
-                        }
-
+                        appendAjaxHint(obj, datas, isFirst, resultTag);
                     }
-
                 });
 
             }
+        }
+
+        function appendAjaxHint(obj, datas, isFirst, resultTag) {
+
+            $.each(datas, function (key, value) {
+
+                var thisValue = obj.value.trim()
+                var searchVal = "";
+                for (var i = 0; i < thisValue.length; i++) {
+                    if (thisValue.charCodeAt(i) > 65280 && thisValue.charCodeAt(i) < 65375)
+                        searchVal += String.fromCharCode(thisValue.charCodeAt(i) - 65248);
+                    else
+                        searchVal += String.fromCharCode(thisValue.charCodeAt(i))
+                }
+
+                var strArray = value.split('');
+                var afterMap = jQuery.map(strArray, function (x) {
+                    var matchText = searchVal.match(new RegExp(RegExp.quote(x), 'i'));
+                    if (matchText !== null) {
+                        return '<font style=color:red>' + x + '</font>';
+                    }
+                    else
+                        return x;
+                }).join('');
+
+                var div = document.createElement('div');
+                div.style.cursor = 'pointer';
+                div.style.padding = '4px';
+                div.style.borderBottomStyle = 'solid';
+                div.style.borderBottomWidth = 'thin';
+                div.innerHTML = afterMap;
+                if (isFirst) {
+                    div.className = 'onSelected';
+                    isFirst = false;
+                }
+                div.onmousedown = function () {
+                    obj.value = this.innerText.trim();
+                    $(resultTag).hide();
+                };
+                div.onmouseover = function () {
+                    var addressDiv = resultTag.getElementsByTagName('div');
+                    for (var i = 0; i < addressDiv.length; i++) {
+                        addressDiv[i].className = '';
+                    }
+                    this.className = 'onSelected';
+                };
+
+                resultTag.appendChild(div);
+            });
+
+            if (datas.length > 0) {
+                $(resultTag).show();
+                $(resultTag).scrollTop(0);
+            }
+
         }
 
         RegExp.quote = function (str) {
