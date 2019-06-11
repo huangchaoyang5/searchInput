@@ -367,6 +367,8 @@ if (!Array.prototype.filter) {
 
         function appendAjaxHint(obj, datas, isFirst, resultTag) {
 
+            resultTag.innerHTML = '';
+
             $.each(datas, function (key, value) {
 
                 var thisValue = obj.value.trim()
