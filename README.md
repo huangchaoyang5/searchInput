@@ -36,5 +36,15 @@
             onSelectedColorCode: 'lightblue',
             taiwanCity: true
         });
+	
+	$('#notitleDiv').searchInput({
+                inputPlaceholder: '地址提示只有顯示縣市和區',
+                inputID: 'Address',
+                inputName: 'Address',
+                inputStyle: 'width:500px;padding:5px;background-color: #f0f0f0;',
+                inputResultStyle: 'width:510px;left:13px;font-size: 11pt;background-color: #f0f0f0;',
+                taiwanCity: true,
+                ajaxUrl: '/API/getAddressByOrderAddress.aspx?address='
+        });
 </script>
 ```
