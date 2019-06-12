@@ -1,0 +1,2779 @@
+<style>
+    .ShoppingCartButton {
+        max-width: 100%;
+        font-size: 90%;
+        color: #fff;
+        /*height: 36px;*/
+        text-align: center;
+        line-height: 36px;
+        -moz-border-top-left-radius: 5px /*{global-radii-blocks}*/;
+        -moz-border-top-right-radius: 5px /*{global-radii-blocks}*/;
+        -webkit-border-top-left-radius: 5px /*{global-radii-blocks}*/;
+        -webkit-border-top-right-radius: 5px /*{global-radii-blocks}*/;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        cursor: pointer;
+        padding: 10px;
+        margin: 0px 2.5px 0px 2.5px;
+        opacity: 0.3;
+        word-wrap: break-word;
+        word-break: break-all;
+        letter-spacing: 2.5px;
+        display: inline;
+    }
+
+    .cartProductArea {
+        background-color: #fafafa;
+    }
+
+        .cartProductArea .tableTitle {
+            -moz-border-radius: 5px /*{global-radii-blocks}*/;
+            -webkit-border-radius: 5px /*{global-radii-blocks}*/;
+            border-radius: 5px /*{global-radii-blocks}*/;
+            background-color: #999;
+            color: #fff;
+            padding: 5px;
+            text-align: center;
+            font-size: 14pt;
+        }
+
+        .cartProductArea table {
+            -moz-border-radius: 5px /*{global-radii-blocks}*/;
+            -webkit-border-radius: 5px /*{global-radii-blocks}*/;
+            border-radius: 5px /*{global-radii-blocks}*/;
+            background-color: #dedede;
+            box-shadow: 0px 0px 40px #ddd;
+            margin: 5px 0px 20px 0px;
+        }
+
+            .cartProductArea table .tableField {
+                border-bottom: 1px #fefefe solid;
+                text-align: center;
+                background-image: -webkit-gradient(linear, left top, left bottom, color-stop( 0%, #d6d6d6 /*{a-body-background-start}*/ ),color-stop(49%, #d6d6d6), color-stop(70%, #d6d6d6), to( #b0b0b0 /*{a-body-background-end}*/ ));
+                background-image: -webkit-linear-gradient(top, #d6d6d6 0%, #d6d6d6 49%,#d6d6d6 70%, #b0b0b0 100%);
+                -pie-background: linear-gradient(#d6d6d6, #b0b0b0);
+                padding: 10px 5px 10px 5px;
+                color: #222;
+                text-shadow: 0px 0px 2px #ddd;
+                font-size: 10.5pt;
+            }
+
+            .cartProductArea table td {
+                line-height: 24pt;
+                font-size: 10.5pt;
+                height: 30px;
+            }
+
+            .cartProductArea table .rowType1 td {
+                line-height: 150%;
+                padding: 10px;
+                background-color: #f0f0f0;
+            }
+
+            .cartProductArea table .rowType1:hover td {
+                background-color: #f0e0e0;
+                background-image: -webkit-gradient(linear, left top, left bottom, color-stop( 0%, #f6e6e6 /*{a-body-background-start}*/ ),color-stop(49%, #f6e6e6), color-stop(50%, #f6e6e6), to( #f0e0e0 /*{a-body-background-end}*/ ));
+                background-image: -webkit-linear-gradient(top, #f6e6e6 0%, #f6e6e6 49%,#f6e6e6 50%, #f0e0e0 100%); /* Saf4+, Chrome */
+                -pie-background: linear-gradient(#f6e6e6, #f0e0e0);
+            }
+
+
+            .cartProductArea table .rowType1 td a {
+                color: #226ba4;
+                text-decoration: none;
+                font-size: 14px;
+            }
+
+            .cartProductArea table .totalRow td {
+                line-height: 120%;
+                padding: 10px;
+                background-color: white;
+                padding: 8px 5px 8px 5px;
+                border-top: 1px solid #f5f5f5;
+            }
+
+            .cartProductArea table input[type="checkbox"] + label::before {
+                content: '\a0';
+                display: inline-block;
+                width: 25px;
+                height: 25px;
+                background: #999;
+                text-indent: 1px;
+                font-size: 20px;
+                cursor: pointer;
+                border-radius: 5px;
+            }
+
+            .cartProductArea table input[type="checkbox"]:checked + label::before {
+                content: '\2228';
+                font-weight: bolder;
+                /*content: '\2714';*/
+                /*content: '\2726';*/
+                /*content: '\2228';*/
+                color: white;
+            }
+
+    .cartButton {
+        overflow: hidden;
+        width: 140px;
+        font-size: 10pt;
+        color: #fff;
+        height: 30px;
+        background-color: #9a1b1b;
+        float: right;
+        /* text-align: center; */
+        line-height: 30px;
+        margin: 3px 10px 1px 5px;
+        -moz-border-radius: 5px /*{global-radii-blocks}*/;
+        -webkit-border-radius: 5px /*{global-radii-blocks}*/;
+        border-radius: 5px /*{global-radii-blocks}*/;
+        cursor: pointer;
+    }
+
+    .note {
+        font-weight: bold;
+        color: #666;
+        font-size: 100%;
+        line-height: 18pt;
+        padding-left: 10px;
+    }
+
+    .fieldO {
+        margin-left: 3px;
+        font-size: 11pt;
+        padding: 5px;
+    }
+
+        .fieldO input:not([type=radio]), .fieldO select {
+            max-width: 600px;
+            background-color: #f0f0f0;
+            border: 1px #999 solid;
+            border-radius: 5px;
+            padding: 5px;
+            font-size: 10pt;
+        }
+</style>
+<div class="contentArea">
+
+    <div class="subTitle" style="text-align: center; margin-top: 20px;">請確認購買物品數量與運送資訊</div>
+
+    <ul id="ShoppingCartButtonUl" style="list-style-type: none; padding: 0px; text-align: center;"></ul>
+
+    <div style="max-width: 100%;">
+        <form id="ShoppingCartForm" name="ShoppingCartForm" action="/Login/ShoppingCart/FinalCart.aspx" method="post">
+            <input type="hidden" id="currentCartType" name="currentCartType" />
+            <input type="hidden" id="userDegreeID" value="{DegreeID}" />
+            <input type="hidden" id="userType" value="{UserType}" />
+            <input type="hidden" id="CanUseSaleryAcount" value="{CanUseSaleryAcount}" />
+
+            <div class="cartProductArea">
+                <div class="tableTitle" style="cursor: pointer" onclick="toggleCartItemTable(this)">購買商品列表▾</div>
+                <table id="cartItemTable" border="0" cellpadding="0" cellspacing="1" style="min-width: 100%;">
+                    <thead>
+                        <tr>
+                            <td class="tableField" style="width: 40px">選擇</td>
+                            <td class="tableField" style="min-width: 250px; max-width: 100%;">產品</td>
+                            <td class="tableField" style="width: 80px">單價</td>
+                            <td class="tableField" style="width: 70px">數量</td>
+                            <td class="tableField" style="width: 80px">小計</td>
+                            <td class="tableField" style="width: 70px">加入宅配</td>
+                            <td class="tableField" style="width: 70px">刪除</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="9" style="text-align: center; font-weight: bold; font-size: large">尚無購買任何商品</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="CartItemShortInformation" style="text-align: center; display: none; padding: 10px 0px;"></div>
+                <table id="addPurchaseTable" border="0" cellpadding="0" cellspacing="1" style="min-width: 100%; display: none;">
+                    <tbody></tbody>
+                </table>
+                <div id="nextStepDiv" style="display: inline-block; width: 101%">
+                    <div class="cartButton" onclick="BackToShopping()">繼續購物</div>
+                    <div class="cartButton" onclick="LoadPayMethod();MoveScrollBar(this);">下一步</div>
+                </div>
+            </div>
+
+            <div id="otherInformation" class="cartProductArea " style="display: none; margin-top: 15px;">
+                <table border="0" cellpadding="0" cellspacing="1" style="min-width: 100%;">
+                    <!-------------------------------------------  personal information start -------------------------------------------------->
+                    <tr>
+                        <td class="rowType1 note">訂購人(信箱: {UserEMail})</td>
+                    </tr>
+                    <tr class="totalRow">
+                        <td>
+                            <div class="fieldO">
+                                姓名&nbsp; {RealName}
+                                <input type="hidden" id="RealName" name="RealName" value="{RealName}">
+                                <input type="hidden" name="UserEMail" value="{UserEMail}" style="width: 287px">
+                                &nbsp;&nbsp;聯絡電話&nbsp;
+                                <input type="text" name="ContactPhone" value="{ContactPhone}" maxlength="10" size="12">
+                                分機&nbsp;
+                                <input type="text" name="NetWorkPhone" value="{NetWorkPhone}" maxlength="8" size="8">
+                                &nbsp;&nbsp;手機號碼&nbsp;
+                                <input type="text" name="MobilePhone" value="{MobilePhone}" maxlength="10" size="12">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="rowType1 note onlyOnHomePayCart">收件人
+                            <input type="checkbox" name="ReceiverType" onclick="copyBuyerInfomation(this)" value="1" />同訂購人
+                        </td>
+                    </tr>
+                    <tr class="totalRow onlyOnHomePayCart">
+                        <td>
+                            <div class="fieldO">
+                                姓名&nbsp;
+                                <input type="text" id="Receiver" name="Receiver" value="" placeholder="請填寫可收件姓名">
+                                &nbsp;&nbsp;連絡電話&nbsp;
+                                <input type="text" id="ReceiverTEL" name="ReceiverTEL" placeholder="手機或市話(分機用#區隔)" size="30" value="">
+                            </div>
+                        </td>
+                    </tr>
+                    <!--------------------------------------------  personal information end --------------------------------------------------->
+                    <tr>
+                        <td class="rowType1 note">配送方式選擇</td>
+                    </tr>
+                    <tr class="totalRow">
+                        <td>
+                            <div class="fieldO">
+                                <ul style="list-style: none; margin: 0; padding: 0px;">
+                                    <li style="display: inline-block; padding-right: 10px;">
+                                        <input type="radio" name="cartgoPickup" value="0" checked onclick="displayAddressInfomation(this)" />一般
+                                    </li>
+                                    <li style="display: inline-block;">
+                                        <input id="cvsRadioInput" type="radio" name="cartgoPickup" value="cvs" onclick="displayAddressInfomation(this)" />超商取貨
+                                        <!--span style="position: relative; padding-right: 25px;">
+                                            <img src="/img/bluequestion.png" title="條件" style="position: absolute; top: 0px; width: 20px; cursor: pointer;" onclick="showCVSRule();">
+                                        </span-->
+                                        <img alt="便利達" src="/img/store_logo.png" height="40" style="vertical-align: middle; margin-left: -1px;" />
+                                        <span style="color: red; font-size: 10px; letter-spacing: 1px;">(需收運費)</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <!--------------------------------------------  address information start --------------------------------------------------->
+                    <tr>
+                        <td class="rowType1 note">運送地址(台灣限定)</td>
+                    </tr>
+                    <tr class="totalRow">
+                        <td>
+                            <div id="companyAddress" class="fieldO">
+                                <div style="display: inline; float: left">
+                                    公司部門&nbsp;<select name="DepartmentID" id="DepartmentID" onchange="InsertDepartment(this.value)"></select>
+                                </div>
+                                <div style="display: inline; float: left;">
+                                    <img alt="快搜" src="/img/deliverIcon.png" style="max-height: 33px; margin-top: -2px; padding-left: 4px; cursor: pointer;" onclick="departmentMenu()" />
+                                </div>
+                                <div style="display: inline; float: left;">
+                                    &nbsp;樓層&nbsp;<select name="SubDepartmentID" id="SubDepartmentID"></select>
+                                </div>
+                            </div>
+                            <div id="otherAddressDiv" class="fieldO"></div>
+                            <div id="cvsAddressDiv" class="fieldO">
+                                <input type="button" value="選擇超商" style="cursor: pointer; margin-right: 6px;" onclick="selectCVSAddress()" />
+                                <input type="hidden" name="CVSPort" />
+                                店名<input type="text" name="CVSName" readonly="readonly" style="margin-left: 6px; margin-right: 6px;" />
+                                地址<input type="text" name="CVSAddress" size="50" readonly="readonly" style="margin-left: 8px;" />
+                            </div>
+                        </td>
+                    </tr>
+                    <!--------------------------------------------  address information end --------------------------------------------------->
+                    <tr>
+                        <td class="rowType1 note">購物金額(不含折抵)</td>
+                    </tr>
+                    <tr class="totalRow">
+                        <td>
+                            <input type="hidden" id="currentTotalFinalPrice" value="0" onchange="FinalPriceChainReaction()" />
+                            <input type="hidden" id="subTotalPrice" value="0" />
+                            <input type="hidden" id="addPurchaseTotalPrice" value="0" />
+                            <input type="hidden" id="needShippingFee" value="N" />
+                            <input type="hidden" id="shippingFee" value="0" />
+                            <style>
+                                .fieldO table {
+                                    margin: 0px;
+                                }
+
+                                    .fieldO table th {
+                                        padding: 2px 20px;
+                                        letter-spacing: 2px;
+                                        text-align: center;
+                                    }
+
+                                    .fieldO table tr:last-child th {
+                                        color: red;
+                                    }
+                            </style>
+                            <div class="fieldO">
+                                <div id="shippingDiscontMsgDiv"></div>
+                                <table>
+                                    <tr>
+                                        <th>商品金額</th>
+                                        <th class="addPurchase">+</th>
+                                        <th class="addPurchase">加購金額</th>
+                                        <th>+</th>
+                                        <th>運費</th>
+                                        <th>=</th>
+                                        <th>訂單金額</th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <label for="subTotalPrice"></label>
+                                        </th>
+                                        <th class="addPurchase">+</th>
+                                        <th class="addPurchase">
+                                            <label for="addPurchaseTotalPrice"></label>
+                                        </th>
+                                        <th>+</th>
+                                        <th>
+                                            <label for="shippingFee"></label>
+                                        </th>
+                                        <th>=</th>
+                                        <th>
+                                            <label for="currentTotalFinalPrice"></label>
+                                        </th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="rowType1 note">優惠抵用</td>
+                    </tr>
+                    <tr class="totalRow">
+                        <td>
+                            <div class="fieldO">
+                                <input type="radio" name="IfUseDiscountPoint" value="0" checked="" onclick="toggleCouponSpan(this.value)">不抵用&nbsp;&nbsp;&nbsp;
+                                <input type="radio" id="userDiscountInput" name="IfUseDiscountPoint" value="1" disabled="" onclick="toggleCouponSpan(this.value)">使用e7line福利點數  剩餘<span style="color: red">0</span>點<span style="position:relative;padding-right:20px;"><img src="/img/bluequestion.png" title="點數說明" style="position:absolute;top:0px;width:20px;left:2px;cursor: pointer;" onclick="DisplayE7linePointMsg();"></span>&nbsp;&nbsp;&nbsp;
+                                <input type="radio" name="IfUseDiscountPoint" value="2" onclick="toggleCouponSpan(this.value)" />使用折價劵
+                                <span id="couponSapn" style="display: none">
+                                    <span style="font-size: x-small;">代碼</span>
+                                    <input type="text" name="CouponCode" id="CouponCode" placeholder="不分大小寫" size="15" onchange="checkCouponCode();" />
+                                    <span id="couponAmountDisplay"></span>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="rowType1 note">付款方式</td>
+                    </tr>
+                    <tr class="totalRow">
+                        <td>
+                            <div id="paymentMethodDiv" class="fieldO"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="rowType1 note">電子發票</td>
+                    </tr>
+                    <tr class="totalRow">
+                        <td>
+                            <div class="fieldO">
+                                <select name="InvoiceType" id="InvoiceType" onchange="IfShowInvoiceNocolumn(this.value)"></select>
+                                <input type="text" size="25" id="InvoiceOfficeNo" class="hidden" name="InvoiceOfficeNo" placeholder="請輸入統一編號...">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="rowType1 note">運送備註</td>
+                    </tr>
+                    <tr class="totalRow">
+                        <td>
+                            <div class="fieldO">
+                                <input name="DeliverMemo" autocomplete="off" type="text" style="width: 80%" value="">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div style="display: inline-block; width: 101%">
+                    <div class="cartButton" onclick="if(confirm('是否要取消訂購?')){ShoppingCartAction('deleteAll');}">取消訂購</div>
+                    <div class="cartButton" onclick="shoppIngCartCheck();">確認訂單</div>
+                </div>
+            </div>
+
+        </form>
+        <form name="cvsForm" action="https://cvs.map.com.tw/default.asp" method="post" style="display: none">
+            <input type="hidden" name="cvsname" value="www.e7line.com" />
+        </form>
+    </div>
+
+    <div style="height: 20px;"></div>
+
+</div>
+<style>
+    .searchBox {
+        padding: 5px;
+        font-size: 18px;
+        border: none;
+        background: #D3D3D3;
+    }
+
+    .cancelIcon {
+        position: absolute;
+        top: -18px;
+        right: -17px;
+        cursor: pointer;
+    }
+
+    .centerDiv {
+        background-color: white;
+        padding: 30px;
+        position: fixed;
+        width: 70%;
+        margin: 0 auto;
+        top: 50%;
+        left: 50%;
+        margin-top: -20%;
+        margin-left: -40%;
+    }
+</style>
+<div id="deptDiv" style="width: 100%; height: 100%; position: absolute; background: rgba(0,0,0,0.5); top: 0; left: 0; right: 0; bottom: 0; z-index: 99999; text-align: center; display: none;">
+    <div class="centerDiv">
+        <img alt="cancel" src="/img/cancel.png" class="cancelIcon" onclick="closeDepartmentMenu()" />
+        <div style="background: #D3D3D3; padding: 8px; line-height: 0px; border-radius: 15px; border-style: solid;">
+            <img alt="search" src="/img/searchIcon.png" style="width: 34px; height: 34px; float: left;" />
+            <span style="font-size: 18px; font-weight: 400;">&nbsp;:</span>
+            <input id="compayAddressSearchInput" class="searchBox" type="text" size="70" onkeyup="departmentMenu(this.value);" placeholder="搜索地址" />
+        </div>
+        <br />
+        <div id="deptInnerDiv" style="overflow-y: auto; height: 450px;"></div>
+    </div>
+</div>
+<script type="text/javascript" src="/js/chaoSearchInput.js"></script>
+<script>
+
+    try {
+        var myCartWindow;
+        var departments = JSON.parse('{DepartmentOptions}');
+
+        $(window).on("message onmessage", function (e) {
+            if (e.originalEvent.origin.indexOf('facebook.com') > 0 || e.originalEvent.origin.indexOf('google.com') > 0) {
+            } else {
+                CallByCVSWindow(e.originalEvent.data); // e.data hold the message
+            }
+        });
+
+    } catch (ex) {
+        console.log(ex.message);
+    }
+
+    $(function () {
+
+        try {
+
+            var postBackMsg = '{ShoppingCartErrorMsg}';
+            if (postBackMsg != '') {
+                alert(postBackMsg);
+            }
+
+            var cartType = getE7LineCookie('CartType');
+            delE7LineCookie('CartType');
+
+            selfPopup('Loading...');
+            /////////////////generate cart bottun
+            var carts = JSON.parse('{CartButtonCnt}');
+            if (carts.length > 0) {
+                ShoppingCartButtonGeneration(carts);
+
+                var currentCart = carts.filter(function (x) { return x.CartType == cartType; });
+
+                if (currentCart.length == 0) {
+                    $('.ShoppingCartButton:first').trigger("click");
+                } else {
+                    CartTypeSelctedAction(cartType, true);
+                }
+            } else {
+                document.getElementById('nextStepDiv').style.display = 'none';
+            };
+
+            InsertInvoiceType();
+            InsertDepartment();
+
+            $('#otherAddressDiv').searchInput({
+                inputPlaceholder: '地址提示只有顯示縣市和區',
+                inputID: 'OtherAddress',
+                inputName: 'OtherAddress',
+                inputStyle: 'width:500px;padding:5px;background-color: #f0f0f0;',
+                inputResultStyle: 'width:510px;left:13px;font-size: 11pt;background-color: #f0f0f0;',
+                taiwanCity: true,
+                ajaxUrl: '/API/getAddressByOrderAddress.aspx?address='
+            });
+
+            closeBlockUI(1000);
+        } catch (ex) {
+            closeBlockUI(1000);
+            alert('系統速度慢請稍後再試!!');
+            console.log(ex.message);
+        }
+
+    });
+
+    //ShoppingCartButton generate
+    function ShoppingCartButtonGeneration(carts) {
+
+        var ul = document.getElementById('ShoppingCartButtonUl');
+        ul.innerHTML = '';
+
+        ////sort cart bottun
+        carts.forEach(function (x) {
+            switch (x.CartType) {
+                case 'M':
+                    x.ele = 1;
+                    break;
+                case 'C':
+                    x.ele = 2;
+                    break;
+                case 'H':
+                    x.ele = 3;
+                    break;
+                case 'W':
+                    x.ele = 4;
+                    break;
+            }
+        });
+
+        carts.sort(function (x, y) {
+            return x.ele - y.ele;
+        }).forEach(function (x) {
+
+            var liID = '';
+            var liInnerHtml;
+
+            switch (x.CartType) {
+                case 'M':
+                    liInnerHtml = '限時搶購結帳(' + x.Count + ')';
+                    liID = 'LimitCartButton';
+                    break;
+                case 'C':
+                    liInnerHtml = '福利社結帳(' + x.Count + ')';
+                    liID = 'CafeteriaCartButton';
+                    break;
+                case 'H':
+                    liInnerHtml = '好康宅配結帳(' + x.Count + ')';
+                    liID = 'HomePayStoreCartButton';
+                    break;
+                case 'W':
+                    liInnerHtml = '企業活動結帳(' + x.Count + ')';
+                    liID = 'WelfareCommitteeButton';
+                    break;
+            }
+
+            var li = document.createElement('li');
+            li.className = 'ShoppingCartButton';
+            li.innerHTML = liInnerHtml;
+            li.id = liID;
+            li.onclick = function () {
+                CartTypeSelctedAction(x.CartType, true);
+            };
+            li.onmouseover = function () {
+                //textEffect('fly-in-out', liID);
+            };
+            li.onmouseout = function () {
+                //li.innerHTML = liInnerHtml;
+            };
+
+            ul.appendChild(li);
+
+        });
+
+    };
+
+    function CartTypeSelctedAction(cartType, loadProduct) {
+
+        //sotre cookie
+        setE7LineCookie('CartType', cartType, 1);
+
+        //reset to defualt
+        var ul = document.getElementById('ShoppingCartButtonUl');
+        $('#ShoppingCartButtonUl li').each(function (index) {
+            this.style.opacity = 0.3;
+            this.style.backgroundColor = 'rgba(33, 31, 31, 0.93)'
+        });
+
+        document.getElementById('otherInformation').style.display = 'none';
+
+        switch (cartType) {
+            case 'M':
+                document.getElementById('LimitCartButton').style.opacity = 1;
+                document.getElementById('LimitCartButton').style.backgroundColor = '#9a1b1b';
+                document.getElementById('ShoppingCartButtonUl').style.borderBottom = '4px solid #9a1b1b';
+                $('.cartButton').each(function (index) {
+                    this.style.backgroundColor = '#9a1b1b';
+                });
+                //textEffect('fly-in-out', 'LimitCartButton');
+                break;
+            case 'C':
+                document.getElementById('CafeteriaCartButton').style.opacity = 1;
+                document.getElementById('CafeteriaCartButton').style.backgroundColor = '#25b8d7';
+                document.getElementById('ShoppingCartButtonUl').style.borderBottom = '4px solid #25b8d7';
+                $('.cartButton').each(function (index) {
+                    this.style.backgroundColor = '#25b8d7';
+                });
+                //textEffect('fly-in-out', 'CafeteriaCartButton');
+                break;
+            case 'H':
+                document.getElementById('HomePayStoreCartButton').style.opacity = 1;
+                document.getElementById('HomePayStoreCartButton').style.backgroundColor = 'rgb(146, 169, 75)';
+                document.getElementById('ShoppingCartButtonUl').style.borderBottom = '4px solid rgb(146, 169, 75)';
+                $('.cartButton').each(function (index) {
+                    this.style.backgroundColor = 'rgb(146, 169, 75)';
+                });
+                //textEffect('fly-in-out', 'HomePayStoreCartButton');
+                break;
+            case 'W':
+                document.getElementById('WelfareCommitteeButton').style.opacity = 1;
+                document.getElementById('WelfareCommitteeButton').style.backgroundColor = '#FF8500';
+                document.getElementById('ShoppingCartButtonUl').style.borderBottom = '4px solid #FF8500';
+                $('.cartButton').each(function (index) {
+                    this.style.backgroundColor = '#FF8500';
+                });
+                //textEffect('fly-in-out', 'WelfareCommitteeButton');
+                break;
+
+        }
+
+        //store current choice of cartType
+        document.getElementById('currentCartType').value = cartType;
+        //when change cartType need to re-select this radio
+        //ShoppingCartForm.cartgoPickup.value = 0;
+        setCheckedValueOfRadioButtonGroup('cartgoPickup', 0);
+
+        if (loadProduct) {
+            LoadCartItems();
+            LoadAddPurchaseProduct();
+        }
+
+    }
+
+    function LoadCartItems() {
+
+        var cartType = document.getElementById('currentCartType').value;
+
+        $.ajax({
+            url: "/Login/ShoppingCart/API/GetCartProducts.aspx?CartType=" + cartType,
+            type: 'GET',
+            async: false,
+            cache: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            beforeSend: function () {
+                selfPopup('Loading...');
+            },
+            complete: function () {
+                closeBlockUI(500);
+            },
+            success: function (data) {
+
+                if (data.isScussess) {
+
+                    var subTotalPrice = 0;
+                    $('#cartItemTable tbody').empty();
+
+                    data.Products.sort(function (a, b) { return a.ISBN > b.ISBN }).forEach(function (x) {
+
+                        var tr = document.createElement('tr');
+                        tr.className = 'rowType1';
+
+                        /////////////////////////////////////選擇/////////////////////////////////////////////////////
+                        var td1 = document.createElement('td');
+                        td1.className = 'colType1';
+                        td1.style.textAlign = 'center';
+
+                        var td1CheckBox = document.createElement('input');
+                        td1CheckBox.type = 'checkbox';
+                        td1CheckBox.style.display = 'none';
+                        td1CheckBox.id = x.ISBN + 'CehckBox';
+                        td1CheckBox.name = 'markedBox';
+                        td1CheckBox.checked = x.Marked;
+                        td1CheckBox.onchange = function () {
+                            ShoppingCartAction('markedProduct', x.ProductType, x.ProductID, null, null, this);
+                        };
+
+                        var td1label = document.createElement('label');
+                        td1label.htmlFor = x.ISBN + 'CehckBox';
+
+                        var hiddenISBNInput = document.createElement('input');
+                        hiddenISBNInput.name = 'ProductISBN';
+                        hiddenISBNInput.type = 'hidden';
+                        hiddenISBNInput.value = x.ISBN;
+
+                        ////可超商取貨數量
+                        var hiddenInput = document.createElement('input');
+                        hiddenInput.name = 'CVSLTDQty';
+                        hiddenInput.type = 'hidden';
+                        hiddenInput.value = x.CVSLTDQty;
+
+                        td1.appendChild(td1CheckBox);
+                        td1.appendChild(td1label);
+                        td1.appendChild(hiddenInput);
+                        td1.appendChild(hiddenISBNInput);
+                        tr.appendChild(td1);
+
+
+                        /////////////////////////////////////產品/////////////////////////////////////////////////////
+                        var td2 = document.createElement('td');
+                        td2.className = 'colType1';
+
+                        var linkPtype = '';
+                        if (x.ProductType == 'C')
+                            linkPtype = '/Cafeteria';
+                        else if (x.ProductType == 'H')
+                            linkPtype = '/HomePayStore';
+
+                        var realPID = x.ProductID;
+                        if (typeof x.ParentID !== 'undefined' && x.ParentID != null && x.ParentID != '')
+                            realPID = x.ParentID;
+
+                        td2.innerHTML += '<a href=' + linkPtype + '/Product/ProductInfo.aspx?ProductID=' + realPID + ' ><span class=pTitle>' + x.Title + '</span></a>';
+                        if (x.RewardDiscount > 0) {
+                            td2.innerHTML += '<span style=color:red>(獲得分享折抵)</span>';
+                        }
+
+                        ////display CVS tag
+                        if (parseInt(x.CVSLTDQty) > 0) {
+
+                            var td2span = document.createElement('span')
+                            td2span.style.width = '60px';
+                            td2span.style.display = 'inline-block';
+                            var td2img = document.createElement('img')
+                            td2img.src = "/img/storepickuplabel.png";
+                            td2img.title = "此商品可超取";
+                            td2img.style.width = '60px';
+                            td2img.style.height = '30px';
+                            td2img.style.position = 'absolute';
+                            td2img.style.marginTop = '-20px';
+                            td2span.appendChild(td2img);
+                            td2.appendChild(td2span);
+
+                        }
+
+                        tr.appendChild(td2);
+
+                        /////////////////////////////////////單價/////////////////////////////////////////////////////
+                        var td3 = document.createElement('td');
+                        td3.className = 'colType1';
+                        td3.align = 'right';
+                        if (x.RewardDiscount > 0)
+                            td3.innerHTML = '<div style=text-align:right>' + x.ListPrice.toFixed(2) + '</div><div style=text-align:right;color:red>(-' + x.RewardDiscount + ')</div>';
+                        else
+                            td3.innerText = x.ListPrice.toFixed(2);
+                        x.ListPrice -= x.RewardDiscount;
+                        tr.appendChild(td3);
+
+                        /////////////////////////////////////數量/////////////////////////////////////////////////////
+                        var td4 = document.createElement('td');
+                        td4.className = 'colType1';
+
+                        var realQty = Math.floor(x.CanBuyQty / x.QuantityOfPerPackage);
+
+                        if (realQty < 1) {
+                            td4.innerHTML = '<div style=color:red>已售完</div>';
+                        } else {
+                            td4.align = 'right';
+
+                            var numSelect = document.createElement('select');
+                            numSelect.name = 'productQty';
+                            numSelect.onchange = function () {
+                                ShoppingCartAction('updateQty', x.ProductType, x.ProductID, '', '', this);
+                            };
+
+                            for (var i = 1; i <= realQty; i++) {
+                                var option = document.createElement('option');
+                                option.value = i;
+                                option.innerText = i;
+
+                                if (x.Qty == i)
+                                    option.selected = true;
+
+                                numSelect.appendChild(option);
+                            }
+
+                            if (x.Specs.length > 1) {
+                                numSelect.disabled = true;
+                                numSelect.style.backgroundColor = 'Gainsboro';
+                            }
+
+                            td4.appendChild(numSelect);
+                        }
+                        tr.appendChild(td4);
+
+                        /////////////////////////////////////小計/////////////////////////////////////////////////////
+                        var td5 = document.createElement('td');
+                        td5.className = 'colType1';
+                        td5.align = 'right';
+                        td5.innerText = x.ListPrice * x.Qty;
+                        tr.appendChild(td5);
+
+                        if (x.Marked)
+                            subTotalPrice += x.ListPrice * x.Qty;
+
+                        /////////////////////////////////////加入宅配/////////////////////////////////////////////////////
+                        var td6 = document.createElement('td');
+                        td6.className = 'colType1';
+
+                        if (cartType == 'H') {
+                            td6.align = 'center';
+                            td6.innerText = '-';
+                        } else {
+
+                            var img = document.createElement('img');
+                            img.title = '使用好康宅配運送商品~方便又快速';
+                            img.src = '/images/AddToHomePay.png';
+                            img.style.width = '100%';
+                            img.style.height = '140%';
+                            img.style.margin = '0 auto';
+                            img.onclick = function () {
+                                if (confirm('您確定要用好康宅配功能?\n(此功能要加收運費!!)')) {
+                                    ShoppingCartAction('addToHomePay', x.ProductType, x.ProductID);
+                                }
+                            }
+                            td6.appendChild(img);
+
+                        }
+
+                        tr.appendChild(td6);
+
+                        /////////////////////////////////////刪除/////////////////////////////////////////////////////
+                        var td7 = document.createElement('td');
+                        td7.className = 'colType1';
+
+                        var deleteBtn = document.createElement('div');
+                        deleteBtn.innerText = '刪除';
+                        deleteBtn.className = 'cartDeleteButton';
+                        deleteBtn.style.backgroundColor = 'rgb(53, 128, 156)';
+                        deleteBtn.onclick = function () {
+                            if (confirm('是否刪除此商品?')) {
+                                ShoppingCartAction('deleteProduct', x.ProductType, x.ProductID);
+                            }
+                        }
+                        td7.appendChild(deleteBtn);
+                        tr.appendChild(td7);
+
+                        $('#cartItemTable tbody').append(tr);
+
+                        /////////////if spec or package have data need to create new row/////////////////////
+                        var existSpecList = x.Specs.filter(function (y) { return y.Count > 0 }).sort(function (a, b) { return a.createDateString > b.createDateString });
+
+                        var biggerPrices = x.PriceCharts.filter(function (y) { return x.Qty < y.Qty });
+
+                        if (existSpecList.length > 0 || biggerPrices.length > 0) {
+
+                            var additionalTr = document.createElement('tr');
+                            additionalTr.className = 'rowType1';
+                            var additionalTd = document.createElement('td');
+                            additionalTd.style.backgroundColor = 'white';
+                            additionalTd.className = 'colType1';
+                            additionalTd.colSpan = 8;
+
+                            //more price
+                            if (biggerPrices.length > 0) {
+                                var firstbiggerPrice = biggerPrices[0];
+                                var extraQty = firstbiggerPrice.Qty - x.Qty;
+
+                                var morePackageTitle = document.createElement('div');
+                                morePackageTitle.style.cssFloat = 'left';
+                                var morePackageTitleSpan = document.createElement('span');
+                                //morePackageTitleSpan.style.backgroundColor = 'Green';
+                                morePackageTitleSpan.style.fontSize = '12px';
+                                morePackageTitleSpan.style.backgroundColor = '#a82c2b';
+                                morePackageTitleSpan.style.color = 'white';
+                                morePackageTitleSpan.style.paddingLeft = '12px';
+                                morePackageTitleSpan.style.paddingRight = '12px';
+                                morePackageTitleSpan.style.paddingTop = '5px';
+                                morePackageTitleSpan.style.paddingBottom = '5px';
+                                morePackageTitleSpan.style.width = '100px';
+                                morePackageTitleSpan.style.borderRadius = '5px';
+                                morePackageTitleSpan.innerHTML = '優惠';
+                                morePackageTitle.appendChild(morePackageTitleSpan);
+                                additionalTd.appendChild(morePackageTitle);
+
+                                var morePackage = document.createElement('div');
+                                morePackage.style.paddingLeft = '45px';
+                                //morePackage.style.marginTop = '5px';
+                                morePackage.style.marginBottom = '8px';
+                                morePackage.style.marginLeft = '10px';
+                                morePackage.innerHTML = '+<span style=color:red>' + extraQty + '</span>件商品可享更佳優惠價格<span style=color:red>' + firstbiggerPrice.ListPrice + '</span>元。';
+
+                                if (x.Specs.length > 0) {
+                                    var selectSpec = document.createElement('select');
+                                    selectSpec.name = 'selectExtraSpec';
+
+                                    x.Specs.sort(function (a, b) { return a.Title > b.Title }).forEach(function (y) {
+                                        var option = document.createElement('option');
+                                        option.value = y.ID;
+                                        option.innerHTML = y.Title;
+                                        selectSpec.appendChild(option);
+                                    });
+                                    morePackage.appendChild(selectSpec);
+                                }
+
+                                var BtnDiv = document.createElement('div');
+                                BtnDiv.style.display = 'inline-block';
+                                BtnDiv.style.verticalAlign = 'middle';
+                                BtnDiv.style.marginLeft = '5px';
+                                BtnDiv.style.cursor = 'pointer';
+
+                                var addItemBtn = document.createElement('img');
+                                addItemBtn.width = '20';
+                                addItemBtn.src = '/images/Add.png';
+                                addItemBtn.onclick = function () {
+                                    if (confirm('是否要增加商品數量?')) {
+                                        //console.log(this.parentNode.getElementsByTagName('select'));
+                                        var extraSpecID = '';
+                                        var selectExtra = this.parentNode.parentNode.getElementsByTagName('select');
+                                        if (selectExtra.length > 0) {
+                                            extraSpecID = selectExtra[0].value;
+                                        }
+
+                                        ShoppingCartAction('addNewQty', x.ProductType, x.ProductID, extraSpecID, firstbiggerPrice.ID);
+                                    }
+                                };
+                                BtnDiv.appendChild(addItemBtn);
+                                morePackage.appendChild(BtnDiv);
+
+                                additionalTd.appendChild(morePackage);
+
+                            }
+
+                            ////spec
+                            if (existSpecList.length > 0) {
+
+                                var specTitleDiv = document.createElement("div");
+                                specTitleDiv.style.paddingBottom = '10px';
+                                var specTitleSpan = document.createElement('span');
+                                //specTitleSpan.style.backgroundColor = 'blue';
+                                specTitleSpan.style.fontSize = '12px';
+                                specTitleSpan.style.backgroundColor = '#8c8c8c';
+                                specTitleSpan.style.color = 'white';
+                                specTitleSpan.style.paddingLeft = '15px';
+                                specTitleSpan.style.paddingRight = '15px';
+                                specTitleSpan.style.paddingTop = '5px';
+                                specTitleSpan.style.paddingBottom = '5px';
+                                specTitleSpan.style.width = '100px';
+                                specTitleSpan.style.borderRadius = '5px';
+                                specTitleSpan.style.color = 'white';
+                                specTitleSpan.innerHTML = '規格選擇';
+                                specTitleDiv.appendChild(specTitleSpan);
+                                specTitleDiv.innerHTML += '&nbsp;&nbsp;<a style=cursor:pointer onclick=ShowProductDetail("' + realPID + '","' + x.ProductType + '") >查看規格</a>';
+                                additionalTd.appendChild(specTitleDiv);
+
+                                var specDiv = document.createElement("div");
+
+                                existSpecList.forEach(function (y) {
+                                    var specItem = document.createElement('div');
+                                    specItem.style.marginBottom = '5px';
+                                    specItem.style.marginLeft = '0px';
+                                    specItem.style.marginRight = '12px';
+                                    specItem.style.cssFloat = 'left';
+
+                                    var specSpan1 = document.createElement('span');
+                                    specSpan1.style.marginLeft = '-1px';
+
+                                    var spen1Div = document.createElement('div');
+                                    spen1Div.style.width = '146px';
+                                    spen1Div.style.fontSize = '11px';
+                                    spen1Div.style.borderColor = 'DarkGray';
+                                    spen1Div.style.borderStyle = 'solid';
+                                    spen1Div.style.borderWidth = '0.2px';
+                                    spen1Div.style.backgroundColor = 'white';
+                                    spen1Div.style.paddingLeft = '5px';
+                                    spen1Div.style.paddingRight = '5px';
+                                    spen1Div.style.cssFloat = 'left';
+                                    spen1Div.innerHTML = y.Title;
+                                    spen1Div.onmouseover = function () {
+                                        //selfPopup(y.Title);
+                                    };
+                                    spen1Div.onmouseout = function () {
+                                        //closeBlockUI(100);
+                                    };
+                                    specSpan1.appendChild(spen1Div);
+
+                                    var specSpan2 = document.createElement('span');
+                                    specSpan2.align = 'left';
+
+                                    var speCntSelect = document.createElement('select');
+                                    speCntSelect.id = y.ID;
+                                    speCntSelect.name = 'productSpecQty';
+                                    speCntSelect.onchange = function () {
+                                        //需每次檢查所有不同規格
+                                        var specArray = {};
+                                        existSpecList.forEach(function (y) {
+                                            specArray[y.ID] = document.getElementById(y.ID).value;
+                                        });
+
+                                        ShoppingCartAction('updateSpecQty', x.ProductType, x.ProductID, y.ID, '', specArray);
+                                    }
+
+                                    for (var i = 1; i <= realQty; i++) {
+                                        var option = document.createElement('option');
+                                        option.value = i;
+                                        option.innerText = i;
+
+                                        if (y.Count == i)
+                                            option.selected = true;
+
+                                        speCntSelect.appendChild(option);
+                                    }
+                                    specSpan2.appendChild(speCntSelect);
+
+                                    if (existSpecList.length > 1) {
+
+                                        var BtnDeleteDiv = document.createElement('div');
+                                        BtnDeleteDiv.style.display = 'inline-block';
+                                        BtnDeleteDiv.style.verticalAlign = 'middle';
+                                        BtnDeleteDiv.style.marginLeft = '5px';
+                                        BtnDeleteDiv.style.cursor = 'pointer';
+
+                                        var deleteBtn = document.createElement('img');
+                                        deleteBtn.width = '20';
+                                        deleteBtn.src = '/images/Delete.png';
+                                        deleteBtn.onclick = function () {
+                                            if (confirm('是否刪除此商品規格?')) {
+                                                ShoppingCartAction('deleteProductSpec', x.ProductType, x.ProductID, y.ID);
+                                            }
+                                        }
+                                        BtnDeleteDiv.appendChild(deleteBtn);
+                                        specSpan2.appendChild(BtnDeleteDiv);
+                                    }
+
+                                    specItem.appendChild(specSpan1);
+                                    specItem.appendChild(specSpan2);
+
+                                    specDiv.appendChild(specItem);
+                                });
+
+                                additionalTd.appendChild(specDiv);
+                            }
+
+                            additionalTr.appendChild(additionalTd);
+                            $('#cartItemTable tbody').append(additionalTr);
+
+                        }
+
+                        /////////////check shipping Fee/////////////////////////
+                        if (cartType == 'H' && x.ProductType != 'H' && x.Marked) {
+                            document.getElementById('needShippingFee').value = 'Y';
+                        }
+
+                    });
+
+                    //////////////////////other information
+                    var priceTr = document.createElement('tr');
+                    priceTr.className = 'totalRow';
+
+                    var priceTrtd1 = document.createElement('td');
+                    priceTrtd1.align = 'right';
+                    priceTrtd1.bgColor = 'white';
+                    priceTrtd1.colSpan = 5;
+                    priceTrtd1.innerText = '小計 NT $';
+                    priceTr.appendChild(priceTrtd1);
+
+                    var priceTrtd2 = document.createElement('td');
+                    priceTrtd2.colSpan = 2;
+                    priceTrtd2.bgColor = 'white';
+                    priceTrtd2.style.fontSize = '12pt';
+                    priceTrtd2.style.color = '#9a1a1a';
+                    priceTrtd2.style.fontWeight = 'bold';
+                    priceTrtd2.align = 'right';
+                    priceTrtd2.innerText = subTotalPrice;
+                    priceTr.appendChild(priceTrtd2);
+
+                    $('#cartItemTable tbody').append(priceTr);
+
+                    var lastTr = document.createElement('tr');
+                    lastTr.className = 'totalRow';
+
+                    var lastTrTd = document.createElement('td');
+                    lastTrTd.colSpan = 8;
+                    lastTrTd.style.paddingRight = '5px';
+                    lastTrTd.style.paddingTop = '5px';
+                    lastTrTd.style.lineHeight = '30pt';
+                    lastTrTd.vAlign = 'middle';
+                    lastTrTd.align = 'right';
+                    lastTrTd.bgColor = 'white';
+                    lastTrTd.innerHTML = '購物車內合計有<span style="font-size:12pt; color:#9a1a1a; font-weight:bold;">' + data.Products.length + '</span>項商品。';
+                    lastTr.appendChild(lastTrTd);
+
+                    $('#cartItemTable tbody').append(lastTrTd);
+
+                    //金額計算
+                    replacelabelTextFromInputvalue('subTotalPrice', subTotalPrice, true);
+
+                    document.getElementById('CartItemShortInformation').innerHTML = '購物車內合計有<span style="font-size:12pt; color:#9a1a1a; font-weight:bold;">' + data.Products.length + '</span>項商品，總計 NT <span style="font-size:12pt; color:#9a1a1a; font-weight:bold;">$' + subTotalPrice + '</span>';
+
+                    //超商取貨 disable or enable
+                    CVSRadioControl();
+
+                } else {
+                    if (data.returnUrl == '') {
+                        selfPopup(data.message);
+                        closeBlockUI(1000);
+                    } else {
+                        window.location.href = data.returnUrl;
+                    }
+                }
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.responseText);
+                selfPopup('系統錯誤!!');
+                closeBlockUI(1000);
+            }
+        });
+
+        ////address change when cart changed
+        if (cartType == 'H') {
+
+            $('#companyAddress').hide();
+            $('#otherAddressDiv').show();
+            //$('.onlyOnHomePayCart').each(function (x) {
+            //    $(this).show();
+            //});
+
+        } else {
+
+            $('#companyAddress').show();
+            $('#otherAddressDiv').hide();
+            //$('.onlyOnHomePayCart').each(function (x) {
+            //    $(this).hide();
+            //});
+
+        }
+
+        if (ShoppingCartForm.ReceiverType.checked)
+            ShoppingCartForm.ReceiverType.value = 0;
+        else
+            ShoppingCartForm.ReceiverType.value = 1;
+
+        displayAddressInfomation(ShoppingCartForm.cartgoPickup);
+
+    }
+
+    function LoadAddPurchaseProduct() {
+
+        var cartType = document.getElementById('currentCartType').value;
+
+        $.ajax({
+            url: "/Login/ShoppingCart/API/GetAddPurchaseProducts.aspx?CartType=" + cartType,
+            type: 'GET',
+            async: false,
+            cache: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            beforeSend: function () {
+                selfPopup('Loading...');
+            },
+            complete: function () {
+                closeBlockUI(500);
+            },
+            success: function (data) {
+
+                if (data.isScussess) {
+
+                    /////////////////////////////////////////////////////////////加購商品清單/////////////////////////////////////////////////////////////////////
+                    $('#addPurchaseTable').hide();
+                    $('#addPurchaseTable tbody').empty();
+                    if (data.AddPurchaseProducts.length > 0) {
+
+                        var activityName = '';
+
+                        data.AddPurchaseProducts.sort(function (a, b) { return a.ActivityName > b.ActivityName }).forEach(function (x) {
+
+                            /////////////////////////////////////活動名稱/////////////////////////////////////////////////////
+                            if (activityName != x.ActivityName) {
+
+                                activityName = x.ActivityName;
+                                var tr = document.createElement('tr');
+                                tr.className = 'rowType1';
+
+                                var td = document.createElement('td');
+                                td.style.fontWeight = 'bold';
+                                td.innerHTML = "加購活動：" + activityName;
+                                td.colSpan = 2;
+
+                                tr.appendChild(td);
+                                $('#addPurchaseTable tbody').append(tr);
+                            }
+
+                            var tr = document.createElement('tr');
+                            tr.className = 'rowType1';
+
+                            /////////////////////////////////////數量/////////////////////////////////////////////////////
+                            var td1 = document.createElement('td');
+                            td1.className = 'colType1';
+                            td1.style.width = '70px';
+                            td1.style.textAlign = 'right';
+                            td1.style.backgroundColor = 'white';
+
+                            var realQty = Math.floor(x.CanBuyQty / x.QuantityOfPerPackage);
+
+                            var td1select = document.createElement('select');
+                            td1select.id = x.ID;
+                            td1select.name = 'addPurchaseProductQty';
+                            td1select.onchange = function () {
+                                ShoppingCartAction('updateAddPurchaseQty', x.ProductType, x.ProductID, '', '', this);
+                            };
+
+                            for (var i = 0; i <= realQty; i++) {
+                                var option = document.createElement('option');
+                                option.value = i;
+                                option.innerText = i;
+                                td1select.appendChild(option);
+                            }
+
+                            td1.appendChild(td1select);
+
+                            var hiddenISBNInput = document.createElement('input');
+                            hiddenISBNInput.name = 'ProductISBN';
+                            hiddenISBNInput.type = 'hidden';
+                            hiddenISBNInput.value = x.ISBN;
+                            td1.appendChild(hiddenISBNInput);
+
+
+                            ////可超商取貨數量
+                            var hiddenInput = document.createElement('input');
+                            hiddenInput.name = 'CVSLTDQty';
+                            hiddenInput.type = 'hidden';
+                            hiddenInput.value = x.CVSLTDQty;
+                            td1.appendChild(hiddenInput);
+
+                            tr.appendChild(td1);
+
+                            /////////////////////////////////////商品/////////////////////////////////////////////////////
+                            var td2 = document.createElement('td');
+                            td2.className = 'colType1';
+                            td2.style.textAlign = 'left';
+                            td2.style.letterSpacing = '1px';
+                            td2.style.backgroundColor = 'white';
+                            td2.innerHTML = "我要加<span style=color:red;font-weight:bold;>$" + x.SalePrice + "</span>買<span class=pTitle>" + x.Title + "</span>";
+
+
+                            ////display CVS tag
+                            if (parseInt(x.CVSLTDQty) > 0) {
+
+                                var td2span = document.createElement('span')
+                                td2span.style.width = '60px';
+                                td2span.style.display = 'inline-block';
+                                var td2img = document.createElement('img')
+                                td2img.src = "/img/storepickuplabel.png";
+                                td2img.title = "此商品可超取";
+                                td2img.style.width = '60px';
+                                td2img.style.height = '30px';
+                                td2img.style.position = 'absolute';
+                                td2img.style.marginTop = '-20px';
+                                td2span.appendChild(td2img);
+                                td2.appendChild(td2span);
+
+                            }
+
+                            td2.innerHTML += '-<a style=cursor:pointer onclick=ShowProductDetail("' + x.ProductID + '","' + x.ProductType + '") >查看資訊</a>';
+
+                            tr.appendChild(td2);
+
+                            $('#addPurchaseTable tbody').append(tr);
+
+                        });
+
+                        $('#addPurchaseTable').show(1500);
+
+                        //金額計算
+                        replacelabelTextFromInputvalue('addPurchaseTotalPrice', 0, true);
+
+                    }
+
+                } else {
+                    if (data.returnUrl == '') {
+                        selfPopup(data.message);
+                        closeBlockUI(1000);
+                    } else {
+                        window.location.href = data.returnUrl;
+                    }
+                }
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.responseText);
+                selfPopup('系統錯誤!!');
+                closeBlockUI(1000);
+            }
+        });
+    }
+
+    function DisplayE7linePointMsg() {
+        var w = 500;
+        var h = 200;
+
+        var top = window.outerHeight / 2 + window.screenY - (h / 2)
+        var left = window.outerWidth / 2 + window.screenX - (w / 2)
+
+        myCartWindow = window.open('', 'paymethodDesc', 'width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+        myCartWindow.document.body.innerHTML = '';
+
+        myCartWindow.document.write('[使用方式]<br/>');
+        myCartWindow.document.write('1. 當您選擇福利點數抵扣時，您可以選擇任何的付款方式以進行搭配，並於不足時採您所使用之付款方式進行收款。<br/>');
+        myCartWindow.document.write('2. 若您欲購買之商品可<span style=color:red>完全採用點數抵扣</span>，<span style=color:red>建議</span>可<span style=color:red>使用信用卡</span>或是LinePay方式付款，避免選擇貨到付款而產生手續費。<br/>');
+        myCartWindow.document.write('3. 若您因採用福利點數全額折抵時(實付金額為0元)，發票將開立為0元發票。<br/>');
+        myCartWindow.document.write('<br/>');
+        myCartWindow.document.write('[其他說明]<br/>');
+        myCartWindow.document.write('1. e7line福利點數每一點等同於新台幣一元，可用以兌換、購買所有商品。<br/>');
+        myCartWindow.document.write('2. 福利點數無使用期限。<br/>');
+        myCartWindow.document.write('3. 活動點數有使用期限；期限依照主辦單位定義為準。<br/>');
+        myCartWindow.document.write('4. 任何點數交易皆會記錄於會員下方點數中心，可隨時查詢。<br/>');
+        myCartWindow.document.write('5. 以福利點數購買商品發生退貨情況時，待退貨程序完成後，系統將自動退回該次支付之福利點數。<br/>');
+        myCartWindow.document.write('<br/>');
+    };
+
+    function LoadPayMethod() {
+
+        document.getElementById('otherInformation').style.display = 'block';
+        var cartType = document.getElementById('currentCartType').value;
+
+        $.ajax({
+            //ie not support html5 attribute
+            url: "/Login/ShoppingCart/API/GetPayMethod.aspx?CartType=" + cartType + "&StorePickup=" + getValueFromRadioButton('cartgoPickup'),
+            type: 'GET',
+            async: false,
+            cache: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            beforeSend: function () {
+                selfPopup('Loading...');
+            },
+            complete: function () {
+                closeBlockUI(500);
+            },
+            success: function (data) {
+
+                if (data.isScussess) {
+
+                    //if any cookie
+                    var ShoppingPaymethod = getE7LineCookie(cartType + 'ShoppingPaymethod');
+                    var ShoppingDiscont = getE7LineCookie(cartType + 'ShoppingDiscont');
+
+                    ////////////////////paymethod//////////////////////////
+                    var isFirst = true;
+                    var method1 = document.getElementById('paymentMethodDiv');
+                    method1.innerHTML = '';
+
+                    data.payMethods.forEach(function (x) {
+                        var payDiv = document.createElement('div');
+                        payDiv.id = x.ID + 'Payment';
+                        payDiv.style.display = 'inline-block';
+
+                        var input = document.createElement('input');
+                        input.type = 'radio';
+                        input.name = 'paymethod';
+                        input.value = x.ID;
+                        input.disabled = x.disabled;
+
+                        if (!x.disabled) {
+                            if (x.ID == ShoppingPaymethod) {
+                                input.checked = true
+                            } else {
+                                input.checked = isFirst;
+                            }
+                            isFirst = false;
+                        }
+
+                        input.onclick = function () {
+                            //store payment information in cookie
+                            setE7LineCookie(cartType + 'ShoppingPaymethod', x.ID, 1);
+                        }
+
+                        payDiv.appendChild(input);
+
+                        var span = document.createElement('span');
+                        span.innerHTML = x.Desc + '&nbsp;&nbsp;&nbsp;';
+                        payDiv.appendChild(span);
+
+                        method1.appendChild(payDiv);
+
+                    });
+
+                    //e7LinePoint                  
+                    if (data.UserPoint >= 0) {
+                        var input = document.getElementById('userDiscountInput');
+                        input.nextSibling.nextSibling.innerText = data.UserPoint;
+                        if (data.UserPoint > 0) {
+                            input.disabled = false;
+                        } else {
+                            input.disabled = true;
+                        }
+                    }
+
+                    if (ShoppingDiscont == '') {
+                        ShoppingCartForm.IfUseDiscountPoint.value = 0;
+                    } else {
+                        ShoppingCartForm.IfUseDiscountPoint.value = ShoppingDiscont;
+                    }
+
+                    toggleCouponSpan(ShoppingCartForm.IfUseDiscountPoint.value);
+                    $('#currentTotalFinalPrice').change();  //trigger every time when load payment infomation
+
+                }
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.responseText);
+                selfPopup('系統錯誤!!');
+                closeBlockUI(1000);
+            }
+        });
+
+    }
+
+    //Insert DepartmentSelection
+    function InsertDepartment(parentID) {
+
+        if (typeof parentID === 'undefined') {
+
+            var selctedOption = departments.filter(function (x) { return x.isSelected })[0];
+            if (typeof selctedOption === 'undefined') {
+                selctedOption = departments.filter(function (x) { return x.ParentID != '' })[0];
+            }
+
+            //Insert公司
+            var depts = document.getElementById('DepartmentID');
+            depts.innerHTML = '';
+            parentDs = departments.filter(function (x) { return x.ParentID == '' });
+            parentDs.forEach(function (x) {
+                var option = document.createElement('option');
+                option.value = x.ID;
+                option.innerText = x.Name;
+                if (x.ID == selctedOption.ParentID) {
+                    option.selected = true;
+                }
+                depts.appendChild(option);
+            });
+
+            if (selctedOption.ParentID == '') {
+                parentID = parentDs[0].ParentID;
+            } else {
+                parentID = selctedOption.ParentID;
+            }
+
+            //Insert樓層
+            var floors = document.getElementById('SubDepartmentID');
+            floors.innerHTML = '';
+            childDs = departments.filter(function (x) { return x.ParentID == parentID });
+            childDs.forEach(function (x) {
+                var option = document.createElement('option');
+                option.value = x.ID;
+                option.innerText = x.Name;
+                if (x.isSelected) {
+                    option.selected = true;
+                }
+                floors.appendChild(option);
+            });
+
+        } else {
+
+            //Insert樓層
+            var floors = document.getElementById('SubDepartmentID');
+            floors.innerHTML = '';
+            childDs = departments.filter(function (x) { return x.ParentID == parentID });
+            childDs.forEach(function (x) {
+                var option = document.createElement('option');
+                option.value = x.ID;
+                option.innerText = x.Name;
+                if (x.isSelected) {
+                    option.selected = true;
+                }
+                floors.appendChild(option);
+            });
+
+        }
+
+    }
+
+    function departmentMenu(text) {
+
+        var parents;
+        if (typeof text === 'undefined') {
+            parents = departments.filter(function (x) { return x.ParentID == '' });
+        } else {
+            parents = departments.filter(function (x) { return x.ParentID == '' && x.Name.indexOf(text) > -1 });
+        }
+
+        var menuBox = document.getElementById('deptInnerDiv');
+        menuBox.innerHTML = '';
+
+        if (parents.length > 0) {
+            var table = document.createElement('table');
+            parents.forEach(function (x) {
+                var tr = document.createElement('tr');
+
+                var td1 = document.createElement('td');
+                td1.innerHTML = x.Name;
+                td1.style.padding = '5px';
+                td1.style.fontSize = '110%';
+                td1.style.letterSpacing = '1px';
+
+                var td2 = document.createElement('td');
+                td2.style.padding = '5px';
+                var btn = document.createElement('input');
+                btn.type = 'button';
+                btn.value = '選擇';
+                btn.onclick = function () {
+                    document.getElementById('DepartmentID').value = x.ID;
+                    InsertDepartment(x.ID);  //樓層
+                    document.getElementById('compayAddressSearchInput').value = '';
+                    document.getElementById('deptDiv').style.display = 'none';
+                };
+                td2.appendChild(btn);
+
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                table.appendChild(tr);
+            });
+
+            menuBox.appendChild(table);
+        }
+
+        document.getElementById('deptDiv').style.display = 'block';
+    }
+
+    function closeDepartmentMenu() {
+        document.getElementById('deptDiv').style.display = 'none';
+        document.getElementById('compayAddressSearchInput').value = '';
+    }
+
+    //Insert InsertInvoiceType
+    function InsertInvoiceType() {
+        var invoices = JSON.parse('{InvoiceOptions}');
+        var invoiceType = document.getElementById('InvoiceType');
+        invoiceType.innerHTML = '';
+
+        invoices.forEach(function (x) {
+            var option = document.createElement('option');
+            option.value = x.ID;
+            option.innerText = x.Name;
+            invoiceType.appendChild(option);
+        });
+    }
+
+    function IfShowInvoiceNocolumn(val) {
+        if (val == '0') { //如果回傳值為0，代表使用三聯式統一發票
+            document.getElementById('InvoiceOfficeNo').className = '';
+        } else {
+            document.getElementById('InvoiceOfficeNo').className = 'hidden';
+        }
+    }
+
+    function toggleCouponSpan(val) {
+
+        if (val == 2) {
+            document.getElementById('couponSapn').style.display = '';
+        } else {
+            document.getElementById('couponSapn').style.display = 'none';
+        }
+
+        var cartType = document.getElementById('currentCartType').value;
+        setE7LineCookie(cartType + 'ShoppingDiscont', val, 1);
+    }
+
+    function checkCouponCode() {
+
+        var ischeck = 0;
+
+        if ($('#CouponCode').val() != '' && $('#CouponCode').val().length > 0) {
+
+            $.ajax({
+                url: "/API/CheckCouponCode.aspx?CouponCode=" + $('#CouponCode').val() + "&ShopSiteID=2&CartType=" + $('#currentCartType').val(),
+                type: 'GET',
+                async: false,
+                success: function (data) {
+                    switch (data) {
+                        case '0':
+                            //$("#CheckCouponCodeImg").attr("src", "/img/coupon_error.png");
+                            $("#CouponCode").css("border", "1px red solid");
+                            break;
+                        default:
+                            //alert('折扣碼驗證成功');
+                            //$("#CheckCouponCodeImg").attr("src", "/img/coupon_success.png");
+                            $("#CouponCode").css("border", "1px green solid");
+                            $('#couponAmountDisplay').html('折價金額$' + data);
+                            ischeck = 1;
+                            break;
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        }
+
+        if (ischeck == 0) {
+            $("#CouponCode").css("border", "1px red solid");
+            $('#couponAmountDisplay').html('');
+            selfPopup('折扣碼無法使用!!');
+            closeBlockUI(1000);
+            return false;
+        }
+        else if (ischeck == 1) {
+            return true;
+        }
+
+    }
+
+    //金額做卡控 (訂單金額>2000元) 可使用中信卡(分期)扣款[享3期0利率]
+    function FinalPriceChainReaction() {
+
+        var price = document.getElementById('currentTotalFinalPrice').value;
+
+        var inputs = document.getElementsByName('paymethod');
+        for (var i = 0; i < inputs.length; i++) {
+            if (inputs[i].value == '9664995f-ae65-46b5-8651-c5dfd799b8f9') {
+                if (parseInt(price) < 2000) {
+                    inputs[i].disabled = true;
+                    inputs[i].checked = false;
+                } else {
+                    inputs[i].disabled = false;
+                }
+                break;
+            }
+        }
+    }
+
+    function CVSRadioControl() {
+
+        var enableRadio = true;
+        var markedBoxs = $('input[name=markedBox]:checked');
+        var addPurchaseBox = $('select[name=addPurchaseProductQty]');
+
+        //商品金額不能超過$19940
+        if (enableRadio) {
+
+            var subPrice = document.getElementById('subTotalPrice').value;
+            var addPrice = document.getElementById('addPurchaseTotalPrice').value;
+            if ((parseInt(subPrice) + parseInt(addPrice)) > 19940) {
+                enableRadio = false;
+            }
+        }
+
+        var productDatas = [];
+
+        markedBoxs.each(function (index) {
+
+            if (!enableRadio)  //只要有一次不是true就不執行
+                return;
+
+            var CVSLTDQty = $(this).parent().find("input[name=CVSLTDQty]").val();
+            var ISBN = $(this).parent().find("input[name=ProductISBN]").val();
+            var BuyQty = $(this).closest("tr").find("select[name=productQty]").val();
+
+            try {
+
+                //0 表示不是超取商品
+                if (parseInt(CVSLTDQty) == 0)
+                    enableRadio = false;
+                else {
+                    enableRadio = true;
+                    productDatas.push({ ISBN: ISBN, CVSLTDQty: parseInt(CVSLTDQty), BuyQty: parseInt(BuyQty) });
+                }
+
+            } catch (ex) {
+                enableRadio = false;
+                console.log(ex.message);
+            }
+
+        });
+
+        addPurchaseBox.each(function (index) {
+
+            if (!enableRadio)  //只要有一次不是true就不執行
+                return;
+
+            var qty = parseInt($(this).val());
+            if (qty > 0) {
+
+                var ISBN = $(this).parent().find("input[name=ProductISBN]").val();
+                var CVSLTDQty = $(this).parent().find("input[name=CVSLTDQty]").val();
+
+                if (parseInt(CVSLTDQty) == 0) {
+                    enableRadio = false;
+                } else {
+                    productDatas.push({ ISBN: ISBN, CVSLTDQty: parseInt(CVSLTDQty), BuyQty: qty });
+                }
+
+            }
+        });
+
+        //勾選的商品和加購商品的購買數量不能超過超取購買數量
+        if (enableRadio) {
+            productDatas.forEach(function (ele) {
+
+                if (!enableRadio)  //只要有一次不是true就不執行
+                    return;
+
+                var buyQty = productDatas.filter(function (x) { return x.ISBN == ele.ISBN })
+                                         .map(function (x) { return x.BuyQty })
+                                         .reduce(function (acc, val) { return acc + val; }, 0);
+
+                if (buyQty == 0 || ele.CVSLTDQty < buyQty) {
+                    enableRadio = false;
+                }
+
+            });
+        }
+
+        //勾選的商品和加購商品總數量不能超過15個
+        if (enableRadio) {
+
+            var totalQtyForCVS = 0;
+            productDatas.forEach(function (ele) {
+                totalQtyForCVS += ele.BuyQty;
+            });
+
+            if (totalQtyForCVS > 15)
+                enableRadio = false;
+
+        }
+
+        if (enableRadio && markedBoxs.length > 0) {
+            document.getElementById('cvsRadioInput').value = 'cvs';
+        } else {
+            document.getElementById('cvsRadioInput').value = 'rule';
+            //ShoppingCartForm.cartgoPickup.value = 0;
+            setCheckedValueOfRadioButtonGroup('cartgoPickup', 0);
+        }
+
+    }
+
+    function showCVSRule() {
+
+        var markedBoxs = $('input[name=markedBox]:checked');
+        var addPurchaseBox = $('select[name=addPurchaseProductQty]');
+        var productDatas = [];
+
+        markedBoxs.each(function (index) {
+
+            var CVSLTDQty = $(this).parent().find("input[name=CVSLTDQty]").val();
+            var ISBN = $(this).parent().find("input[name=ProductISBN]").val();
+            var title = $(this).closest("tr").find("td span.pTitle").html();
+            productDatas.push({ ISBN: ISBN, CVSLTDQty: parseInt(CVSLTDQty), Title: title });
+
+        });
+
+        addPurchaseBox.each(function (index) {
+
+            var qty = parseInt($(this).val());
+            if (qty > 0) {
+
+                var ISBN = $(this).parent().find("input[name=ProductISBN]").val();
+                var CVSLTDQty = $(this).parent().find("input[name=CVSLTDQty]").val();
+                var title = $(this).closest("tr").find("td span.pTitle").html();
+
+                var found = productDatas.find(function (ele) {
+                    return ele.ISBN == ISBN;
+                })
+
+                if (typeof found === 'undefined') {
+                    productDatas.push({ ISBN: ISBN, CVSLTDQty: parseInt(CVSLTDQty), Title: title });
+                }
+
+            }
+        });
+
+
+        var w = 600;
+        var h = 280;
+
+        var top = window.outerHeight / 2 + window.screenY - (h / 2)
+        var left = window.outerWidth / 2 + window.screenX - (w / 2)
+
+        myCartWindow = window.open('', 'paymethodDesc', 'width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+        myCartWindow.document.body.innerHTML = '';
+
+        if (productDatas.length > 0) {
+            myCartWindow.document.write('適用方式:<br/>');
+            myCartWindow.document.write('1.挑選之商品『必須均為』適用超商取貨之商品。<br/>');
+            myCartWindow.document.write('2.每樣商品購買總數需低於該商品限制購買量。<br/>');
+            myCartWindow.document.write('3.購買總額需低於新台幣2萬元整。<br/>');
+            myCartWindow.document.write('4.購買品項需低於15件。<br/>');
+            myCartWindow.document.write('<br/>');
+            myCartWindow.document.write('|阿爆貼心提醒|<br/>');
+            myCartWindow.document.write('超取個別商品數量限制，如下:<br/>');
+
+            for (var i = 0; i < productDatas.length; i++) {
+                if (parseInt(productDatas[i].CVSLTDQty) == 0) {
+                    myCartWindow.document.write(productDatas[i].Title + '不是超取商品。<br/>');
+                } else {
+                    myCartWindow.document.write(productDatas[i].Title + '購買數量不能超過' + productDatas[i].CVSLTDQty + '。<br/>');
+                }
+            }
+
+            myCartWindow.document.write('如有任何問題歡迎與我們聯繫。<br/>');
+            myCartWindow.document.write('服務專線：02-8912-4000#1259、3213、1245。<br/>');
+
+        } else {
+            myCartWindow.document.write('尚未勾選超商取貨的商品，不能選擇超取。');
+        }
+
+    }
+
+    //超商取貨 radio button choice
+    function displayAddressInfomation(obj) {
+
+        var myValue = obj.value;
+        var cartType = document.getElementById('currentCartType').value;
+        if (getValueFromRadioButton('cartgoPickup') == 0) {
+            if (cartType == 'H') {
+                $('#otherAddressDiv').show();
+            } else {
+                $('#companyAddress').show();
+            }
+
+            $('#cvsAddressDiv').hide();
+        } else if (getValueFromRadioButton('cartgoPickup') == 'rule') {
+            showCVSRule();
+            setCheckedValueOfRadioButtonGroup('cartgoPickup', 0);
+        } else {
+            $('#companyAddress').hide();
+            $('#otherAddressDiv').hide();
+            $('#cvsAddressDiv').show();
+        }
+
+
+        calculateOrderAmount();
+
+        if (document.getElementById('otherInformation').style.display != 'none')
+            LoadPayMethod();
+
+    }
+
+    function selectCVSAddress() {
+        var w = 950;
+        var h = 600;
+
+        var top = window.outerHeight / 2 + window.screenY - (h / 2)
+        var left = window.outerWidth / 2 + window.screenX - (w / 2)
+        cvsForm.target = "CVSPanel"
+        myCartWindow = window.open('', 'CVSPanel', 'width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+        cvsForm.submit();
+
+        var windowCloseAction = setInterval(function () {
+            if (myCartWindow.closed !== false) { // !== is required for compatibility with Opera
+                clearInterval(windowCloseAction);
+
+                //for ie11 message is not working on ie 11 and the link only work in Production so only use cookie in production
+                var cvsMap = getE7LineCookie('CVSMapInformation');
+                if (cvsMap != '') {
+                    CallByCVSWindow(cvsMap);
+                }
+                delE7LineCookie('CVSMapInformation');
+            }
+        }, 500);
+
+    }
+
+    function CallByCVSWindow(message) {
+
+        try {
+
+            var obj = JSON.parse(message);
+            if (typeof obj.CVSPort !== 'undefined') {
+                ShoppingCartForm.CVSPort.value = obj.CVSPort;
+                ShoppingCartForm.CVSName.value = obj.CVSName;
+                ShoppingCartForm.CVSAddress.value = obj.CVSAddress;
+            }
+
+        }
+        catch (e) {
+            console.log(e.message);
+        }
+    }
+
+    function ShowProductDetail(productID, productType) {
+
+        $.ajax({
+            url: "/Login/ShoppingCart/API/GetProductDescription.aspx?ProductID=" + productID + "&ProductType=" + productType,
+            type: 'GET',
+            async: false,
+            cache: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            beforeSend: function () {
+                selfPopup('Loading...');
+            },
+            complete: function () {
+                closeBlockUI(500);
+            },
+            success: function (data) {
+                if (data.isScussess) {
+                    var div = '<div style=white-space:pre-line;line-height:18pt;>' + data.message + '</div>';
+                    window.open('', '_blank', 'width=400,height=400,resizable=1').document.write(div);
+                } else {
+                    selfPopup(data.message);
+                    closeBlockUI(1000);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.responseText);
+                selfPopup('系統錯誤!!');
+                closeBlockUI(1000);
+            }
+        });
+    }
+
+    function toggleCartItemTable(obj) {
+        if ($("#cartItemTable").is(":hidden")) {
+            obj.innerHTML = '購買商品列表▾';
+            $('#cartItemTable tbody tr td').slideDown('slow');
+            $('#cartItemTable').slideDown();
+            $('#CartItemShortInformation').hide();
+        } else {
+            obj.innerHTML = '購買商品列表▴';
+            $('#cartItemTable tbody tr td').slideUp('slow');
+            $('#cartItemTable').slideUp();
+            $('#CartItemShortInformation').show();
+        }
+    }
+
+    function paymethodDesc(type) {
+
+        var w = 400;
+        var h = 200;
+
+        var top = window.outerHeight / 2 + window.screenY - (h / 2)
+        var left = window.outerWidth / 2 + window.screenX - (w / 2)
+
+        myCartWindow = window.open('', 'paymethodDesc', 'width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+        myCartWindow.document.body.innerHTML = '';
+
+        if (type == 'E') {
+            myCartWindow.document.write('1. 限用中國信託信用卡(VISA/Master/JCB)<br/>');
+            myCartWindow.document.write('2. 訂單總額需大於2000<br/>');
+        } else if (type == 'D') {
+
+        }
+
+    }
+
+    function replacelabelTextFromInputvalue(inputID, myVal, isCalcuateFinalPrice) {
+        document.getElementById(inputID).value = myVal;
+        $('label[for="' + inputID + '"]').html(myVal);
+
+        if (isCalcuateFinalPrice) {
+            calculateOrderAmount();
+        }
+    }
+
+    function calculateOrderAmount() {
+
+        var subtotal = document.getElementById('subTotalPrice').value;
+        var addPurchaseTotal = document.getElementById('addPurchaseTotalPrice').value;
+        var needShippingFee = document.getElementById('needShippingFee').value; // value  'Y' or 'N'
+        var shippingFee = 0;
+
+        try {
+
+            if (needShippingFee == 'Y')
+                shippingFee = 80;
+
+            var cartType = document.getElementById('currentCartType').value;
+            var userType = document.getElementById('userType').value;
+            var degreeID = document.getElementById('userDegreeID').value;
+
+            if (getValueFromRadioButton('cartgoPickup') != 0) {
+
+                shippingFee = 60;
+                if ((parseInt(subtotal) + parseInt(addPurchaseTotal)) >= 999)
+                    shippingFee = 30;
+
+                replacelabelTextFromInputvalue('shippingFee', shippingFee);
+                document.getElementById('shippingDiscontMsgDiv').innerHTML = '<div>>>>>商品金額滿<span style="color: red;">999</span>元，享優惠運費<span style="color: red;">30</span>元。</div><br/>';
+
+            } else if (userType == "1" && degreeID == "0" && cartType == 'H') {
+
+                //by 建興 一般會員購物滿999, 運費30元       
+                document.getElementById('shippingDiscontMsgDiv').innerHTML = '<div>>>>>商品金額滿<span style="color: red;">999</span>元，享優惠運費<span style="color: red;">30</span>元。</div><br/>';
+
+                if ((parseInt(subtotal) + parseInt(addPurchaseTotal)) >= 999)
+                    shippingFee = 30;
+
+                replacelabelTextFromInputvalue('shippingFee', shippingFee);
+
+            } else {
+                replacelabelTextFromInputvalue('shippingFee', shippingFee);
+                document.getElementById('shippingDiscontMsgDiv').innerHTML = '';
+            }
+
+            $('th.addPurchase').each(function () {
+                if (parseInt(addPurchaseTotal) > 0) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+
+            var finalPrice = parseInt(subtotal) + parseInt(addPurchaseTotal) + parseInt(shippingFee);
+            replacelabelTextFromInputvalue('currentTotalFinalPrice', finalPrice);
+            $('#currentTotalFinalPrice').change();
+
+        } catch (ex) {
+            alert('請重新整理頁面。');
+            console.log(ex.message);
+        }
+
+    }
+
+    function BackToShopping() {
+
+        var cartType = document.getElementById('currentCartType').value;
+
+        var cartName = '';
+        if (cartType == 'C') {
+            cartName = '/Cafeteria';
+        } else if (cartType == 'W') {
+            cartName = '/WelfareCommittee';
+        } else if (cartType == 'H') {
+
+            var userType = document.getElementById('userType').value;
+            var degreeID = document.getElementById('userDegreeID').value;
+
+            if (userType == "1" && degreeID == "0") {   //一般會員
+            } else {
+                cartName = '/HomePayStore';
+            }
+
+        }
+
+        window.location.href = cartName + '/Default.aspx';
+    }
+
+    /*
+   action: addNewQty, updateQty, updateSpecQty, addToHomePay, deleteProduct, deleteProductSpec, deleteAll, markedProduct, updateAddPurchaseQty
+   */
+    function ShoppingCartAction(action, ProductType, ProductID, SpecID, PriceChartID, obj) {
+
+        var cartType = document.getElementById('currentCartType').value;
+        var parameters = 'Action=' + action + '&CartType=' + cartType;
+
+        if (typeof ProductType === 'undefined')
+            parameters += '&ProductType=';
+        else
+            parameters += '&ProductType=' + ProductType;
+
+        if (typeof ProductID === 'undefined')
+            parameters += '&ProductID=';
+        else
+            parameters += '&ProductID=' + ProductID;
+
+        if (typeof SpecID === 'undefined')
+            parameters += '&SpecID=';
+        else
+            parameters += '&SpecID=' + SpecID;
+
+        if (typeof PriceChartID === 'undefined')
+            parameters += '&PriceChartID=';
+        else
+            parameters += '&PriceChartID=' + PriceChartID;
+
+        if (action == 'markedProduct') {
+            if (obj.checked)
+                parameters += '&Marked=Y';
+            else
+                parameters += '&Marked=N';
+        }
+
+        if (action == 'updateQty')
+            parameters += '&Qty=' + obj.value;
+        else if (action == 'updateSpecQty')
+            parameters += '&SpecList=' + JSON.stringify(obj);
+        else if (action == 'updateAddPurchaseQty')
+            parameters += '&AddPurchaseProductID=' + obj.id + '&Qty=' + obj.value + '&canBuyQty=' + obj.children.length;
+        else
+            parameters += '&Qty='
+
+        $.ajax({
+            url: "/Login/ShoppingCart/API/ShoppingCartAction.aspx?" + parameters,
+            type: 'GET',
+            async: false,
+            cache: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            beforeSend: function () {
+                selfPopup('Loading...');
+            },
+            complete: function () {
+                closeBlockUI(1000);
+            },
+            success: function (data) {
+
+                var needRefreshPage = false;
+
+                if (data.isScussess) {
+
+                    switch (action) {
+                        case 'addNewQty':
+                            break;
+                        case 'updateQty':
+                            obj.style.borderColor = '';
+                            break;
+                        case 'updateSpecQty':
+                            keys = $.map(obj, function (v, i) {
+                                document.getElementById(i).style.borderColor = '';
+                            });
+                            break;
+                        case 'deleteAll':
+                            //when remove this cart or when this cart is completed shopping in OrderResult.aspx
+                            delE7LineCookie(cartType + 'ShoppingPaymethod');
+                            delE7LineCookie(cartType + 'ShoppingDiscont');
+                            needRefreshPage = true;
+                            break;
+                        case 'markedProduct':
+                        case 'updateAddPurchaseQty':
+                            obj.style.borderColor = '';
+                            replacelabelTextFromInputvalue('addPurchaseTotalPrice', data.addPurchaseTotalPrice, true);
+
+                            //超商取貨 disable or enable
+                            CVSRadioControl();
+                            displayAddressInfomation(ShoppingCartForm.cartgoPickup);
+                            break;
+                        default:
+                            var currentCart = data.Carts.filter(function (x) { return x.CartType == cartType });
+
+                            if (currentCart.length == 0) {
+
+                                //when remove this cart or when this cart is completed shopping in OrderResult.aspx
+                                delE7LineCookie(cartType + 'ShoppingPaymethod');
+                                delE7LineCookie(cartType + 'ShoppingDiscont');
+
+                                needRefreshPage = true;
+                                if (action == 'addToHomePay') {
+                                    //sotre cookie
+                                    setE7LineCookie('CartType', 'H', 1);
+                                }
+                            } else {
+
+                                //change cart count and find selected cart
+                                ShoppingCartButtonGeneration(data.Carts);
+                                CartTypeSelctedAction(cartType, false);
+
+                                //update total count on menu
+                                var totalCnt = 0;
+                                data.Carts.forEach(function (x) {
+                                    totalCnt += x.Count;
+                                });
+                                document.getElementById("ShoppingCartTotalCount").innerHTML = '<div class="ShoppingCartCountInner">' + totalCnt + '</div>';
+                            }
+                            break;
+                    };
+
+                    if (needRefreshPage) {
+                        window.location = window.location.href;  //avoid form data change don't use window.location.reload(true);
+                    } else {
+
+                        if (data.isReloadTable) {
+                            LoadCartItems();
+                        }
+
+                        if (data.isReloadAddPurchase) {
+                            LoadAddPurchaseProduct();
+                        }
+
+                        //if (data.isReloadPayment) {
+                        //    LoadPayMethod();
+                        //}
+
+                    }
+
+                } else {
+                    if (data.returnUrl == '') {
+                        selfPopup(data.message);
+                        closeBlockUI(1500);
+
+                        switch (action) {
+                            case 'updateQty':
+                            case 'updateAddPurchaseQty':
+                                obj.style.borderColor = 'red';
+                                break;
+                            case 'updateSpecQty':
+                                keys = $.map(obj, function (v, i) {
+                                    document.getElementById(i).style.borderColor = 'red';
+                                });
+                                break;
+                        }
+
+                    } else {
+                        window.location.href = data.returnUrl;
+                    }
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.responseText);
+                selfPopup('系統錯誤!!');
+                //closeBlockUI(1000);
+            }
+        });
+    }
+
+    function shoppIngCartCheck() {
+
+        var form = document.getElementById('ShoppingCartForm');
+
+        var cartType = form.currentCartType.value;
+        if (cartType == 'M' || cartType == 'C' || cartType == 'H' || cartType == 'W') {
+        } else {
+            selfPopup('購物車種類有誤，請刷新頁面。');
+            closeBlockUI(1500);
+            return;
+        }
+
+        var markedCount = $('input[name=markedBox]:checked').length;
+        if (markedCount == 0) {
+            MoveScrollBar($('#ShoppingCartButtonUl'));
+            selfPopup('請勾選至少一種商品。');
+            closeBlockUI(1500);
+            return;
+        }
+
+        var paymethod = $('#ShoppingCartForm input[name=paymethod]:checked')[0];
+        if (typeof paymethod === 'undefined') {
+            selfPopup('請選擇付款方式。');
+            closeBlockUI(1500);
+            return;
+        } else {
+            if (paymethod.value == '') {
+                selfPopup('請選擇付款方式。');
+                closeBlockUI(1500);
+                return;
+            } else if (paymethod.value == '9664995f-ae65-46b5-8651-c5dfd799b8f9') {  //中信卡(分期)扣款[享3期0利率]
+                var price = document.getElementById('currentTotalFinalPrice').value;
+                if (price < 2000) {
+                    selfPopup('使用中信卡(分期)扣款[享3期0利率]時，金額總計需大於2000元。');
+                    closeBlockUI(1500);
+                    return;
+                }
+            }
+        }
+
+        var discount = $('#ShoppingCartForm input[name=IfUseDiscountPoint]:checked')[0].value;
+        if (discount == '') {
+            selfPopup('請選擇優惠抵用。');
+            closeBlockUI(1500);
+            return;
+        } else if (discount == 2) {
+            if (!checkCouponCode())
+                return;
+        }
+
+        var contactPhone = $('#ShoppingCartForm input[name=ContactPhone]')[0].value;
+        if (contactPhone == '') {
+            MoveScrollBar($('#otherInformation'), -50);
+            selfPopup('聯絡電話必填。');
+            closeBlockUI(2000);
+            return;
+        } else {
+            var message = taiwanPhoneCheck(contactPhone, false);
+            if (message != '') {
+                MoveScrollBar($('#otherInformation'), -50);
+                selfPopup(message);
+                closeBlockUI(2000);
+                return;
+            }
+        }
+
+        var mobile = $('#ShoppingCartForm input[name=MobilePhone]')[0].value.trim();
+        if (mobile == '') {
+            MoveScrollBar($('#otherInformation'), -50);
+            selfPopup('手機號碼必填。');
+            closeBlockUI(1500);
+            return;
+        } else {
+            var regex = /^[(]{0,1}[0-9]{2}[)]{0,1}[-\s\.]{0,1}[0-9]{4}[-\s\.]{0,1}[0-9]{4}$/;
+            if (!regex.test(mobile)) {
+                MoveScrollBar($('#otherInformation'), -50);
+                selfPopup('手機號碼輸入錯誤，請檢查。');
+                closeBlockUI(1500);
+                return;
+            }
+        }
+
+        var recType = form.ReceiverType.value;
+        //指定收件者
+        if (recType == 1) {
+            var receiver = $('#ShoppingCartForm input[name=Receiver]')[0].value.trim();
+            if (receiver == '') {
+                MoveScrollBar($('#otherInformation'), 40);
+                selfPopup('收件人必填。');
+                closeBlockUI(1500);
+                return;
+            }
+
+            var receiverPhone = $('#ShoppingCartForm input[name=ReceiverTEL]')[0].value.trim();
+            if (receiverPhone == '') {
+                MoveScrollBar($('#otherInformation'), 40);
+                selfPopup('收件人連絡電話必填。');
+                closeBlockUI(1500);
+                return;
+            } else {
+                var message = taiwanPhoneCheck(receiverPhone, true);
+                if (message != '') {
+                    MoveScrollBar($('#otherInformation'), 40);
+                    selfPopup(message);
+                    closeBlockUI(2000);
+                    return;
+                }
+            }
+        }
+
+        var userType = document.getElementById('userType').value;
+        var degreeID = document.getElementById('userDegreeID').value;
+
+        var pickupType = getValueFromRadioButton('cartgoPickup'); //form.cartgoPickup.value;
+        if (pickupType == 0) {
+            if (cartType == 'H') {
+                var otherAddress = $('#ShoppingCartForm input[name=OtherAddress]')[0].value.trim();
+                if (otherAddress == '') {
+                    MoveScrollBar($('#otherInformation'), 100);
+                    selfPopup('送貨地址必填。');
+                    closeBlockUI(1500);
+                    return;
+                } else {
+                    otherAddress = otherAddress.replace('臺', '台');
+                    $('#ShoppingCartForm input[name=OtherAddress]')[0].value = otherAddress;
+                    //find area match by city
+                    var areas = taiwanCityAndArea(otherAddress.substr(0, 3));
+                    var list = areas.filter(function (x) { return x.indexOf(otherAddress.substr(0, 6)) > -1 })
+                    if (otherAddress.length <= 6 || list.length == 0) {
+                        MoveScrollBar($('#otherInformation'), 100);
+                        selfPopup('送貨地址縣市區有誤。');
+                        closeBlockUI(1500);
+                        return;
+                    }
+                }
+            }
+        } else if (pickupType == 'cvs') {
+
+            //var receiver = $('#ShoppingCartForm input[name=Receiver]')[0].value.trim();
+            //if (recType == 0) {
+            //    //同訂購
+            //    receiver = form.RealName.value;
+            //}
+
+            //if (!isChinese(receiver)) {
+            //    MoveScrollBar($('#otherInformation'), 40);
+            //    selfPopup('收件人姓限中文。');
+            //    closeBlockUI(1500);
+            //    return;
+            //}
+
+            ////storepickup check address, name and port have value
+            if (form.CVSPort.value.trim() == '' || form.CVSName.value.trim() == '' || form.CVSAddress.value.trim() == '') {
+                MoveScrollBar($('#otherInformation'), 100);
+                selfPopup('尚未選擇超商取貨地址，請檢查。');
+                closeBlockUI(1500);
+                return;
+            } else {
+
+                var subPrice = document.getElementById('subTotalPrice').value;
+                var addPrice = document.getElementById('addPurchaseTotalPrice').value;
+                if ((parseInt(subPrice) + parseInt(addPrice)) > 19940) {
+                    MoveScrollBar($('#otherInformation'), 100);
+                    selfPopup('選擇超商取貨時，商品金額不能超過$19940。');
+                    closeBlockUI(1500);
+                    return;
+                } else {
+
+                    var markedBoxs = $('input[name=markedBox]:checked');
+                    var addPurchaseBox = $('select[name=addPurchaseProductQty]');
+                    var productDatas = [];
+
+                    markedBoxs.each(function (index) {
+
+                        var CVSLTDQty = $(this).parent().find("input[name=CVSLTDQty]").val();
+                        var BuyQty = $(this).closest("tr").find("select[name=productQty]").val();
+                        var ISBN = $(this).parent().find("input[name=ProductISBN]").val();
+                        var title = $(this).closest("tr").find("td span.pTitle").html();
+                        productDatas.push({ ISBN: ISBN, CVSLTDQty: parseInt(CVSLTDQty), BuyQty: parseInt(BuyQty), Title: title });
+
+                    });
+
+                    addPurchaseBox.each(function (index) {
+
+                        var qty = parseInt($(this).val());
+                        if (qty > 0) {
+
+                            var ISBN = $(this).parent().find("input[name=ProductISBN]").val();
+                            var title = $(this).closest("tr").find("td span.pTitle").html();
+                            var CVSLTDQty = $(this).parent().find("input[name=CVSLTDQty]").val();
+
+                            if (parseInt(CVSLTDQty) == 0) {
+                                enableRadio = false;
+                            } else {
+                                productDatas.push({ ISBN: ISBN, CVSLTDQty: parseInt(CVSLTDQty), BuyQty: qty, Title: title });
+                            }
+
+                        }
+                    });
+
+                    productDatas.forEach(function (ele) {
+
+                        var buyQty = productDatas.filter(function (x) { return x.ISBN == ele.ISBN })
+                                                 .map(function (x) { return x.BuyQty })
+                                                 .reduce(function (acc, val) { return acc + val; }, 0);
+
+                        if (ele.CVSLTDQty < buyQty) {
+                            MoveScrollBar($('#otherInformation'), 100);
+                            selfPopup('選擇超商取貨時，' + ele.Title + '數量不能超過' + ele.CVSLTDQty + '。');
+                            closeBlockUI(1500);
+                            return;
+                        }
+
+                    });
+
+                }
+
+            }
+
+        }
+
+        ////product input border is red
+        var specQtyInputs = $('select[name=productQty]').filter(function () {
+            return $(this).css('border-color') == 'rgb(255, 0, 0)';
+        });
+
+        if (specQtyInputs.length > 0) {
+            MoveScrollBar($('#ShoppingCartButtonUl'));
+            selfPopup('商品數量有誤，請檢查。');
+            closeBlockUI(1500);
+            return;
+        }
+
+        ////product spec input border is red
+        var specQtyInputs = $('select[name=productSpecQty]').filter(function () {
+            return $(this).css('border-color') == 'rgb(255, 0, 0)';
+        });
+
+        if (specQtyInputs.length > 0) {
+            MoveScrollBar($(specQtyInputs[0]), -150);
+            selfPopup('商品數量有誤，請檢查。');
+            closeBlockUI(1500);
+            return;
+        }
+
+        ////addpurchaseProduct input border is red
+        var addPurchaseProductQtyInputs = $('select[name=addPurchaseProductQty]').filter(function () {
+            return $(this).css('border-color') == 'rgb(255, 0, 0)';
+        });
+
+        if (addPurchaseProductQtyInputs.length > 0) {
+            MoveScrollBar($(addPurchaseProductQtyInputs[0]), -150);
+            selfPopup('加購商品數量有誤，請檢查。');
+            closeBlockUI(1500);
+            return;
+        }
+
+        //submit the form
+        form.submit();
+
+    }
+
+    function taiwanPhoneCheck(phone, hasExtnet) {
+        var message = '';
+        var numbers = phone;
+
+        if (hasExtnet) {
+            var lastIndex = phone.indexOf('#');
+            if (lastIndex > 0) {
+                numbers = phone.substr(0, lastIndex);
+            }
+        }
+
+        numbers = numbers.replace(/[^0-9.]/g, "");
+
+        switch (numbers.length) {
+            case 10:
+                if (hasExtnet)
+                    regex = /^[(]{0,1}[0-9]{2}[)]{0,1}[-\s\.]{0,1}[0-9]{4}[-\s\.]{0,1}[0-9]{4}(#\d+)?$/;
+                else
+                    regex = /^[(]{0,1}[0-9]{2}[)]{0,1}[-\s\.]{0,1}[0-9]{4}[-\s\.]{0,1}[0-9]{4}$/;
+                break;
+            default:
+                if (numbers.indexOf('0836') == 0) {
+                    if (hasExtnet)
+                        regex = /^[(]{0,1}[0-9]{4}[)]{0,1}[-\s\.]{0,1}[0-9]{1}[-\s\.]{0,1}[0-9]{4}(#\d+)?$/;
+                    else
+                        regex = /^[(]{0,1}[0-9]{4}[)]{0,1}[-\s\.]{0,1}[0-9]{1}[-\s\.]{0,1}[0-9]{4}$/;
+                } else if (numbers.indexOf('037') == 0 || numbers.indexOf('049') == 0 || numbers.indexOf('082') == 0 || numbers.indexOf('089') == 0) {
+                    if (hasExtnet)
+                        regex = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{2}[-\s\.]{0,1}[0-9]{4}(#\d+)?$/;
+                    else
+                        regex = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{2}[-\s\.]{0,1}[0-9]{4}$/;
+                } else {
+                    if (hasExtnet)
+                        regex = /^[(]{0,1}[0-9]{2}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}(#\d+)?$/;
+                    else
+                        regex = /^[(]{0,1}[0-9]{2}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
+                }
+                break;
+
+        }
+
+        if (!regex.test(phone)) {
+            if (hasExtnet)
+                message = '收件人連絡電話輸入錯誤或室內電話未加區碼，請檢查。';
+            else
+                message = '聯絡電話輸入錯誤或室內電話未加區碼，請檢查。';
+        }
+
+        return message;
+    }
+
+    function copyBuyerInfomation(obj) {
+
+        if (obj.checked) {
+            ShoppingCartForm.ReceiverType.value = 0;
+            ShoppingCartForm.Receiver.value = ShoppingCartForm.RealName.value;
+
+            ShoppingCartForm.Receiver.value = '同訂購人';
+            ShoppingCartForm.ReceiverTEL.value = '同訂購人';
+            ShoppingCartForm.Receiver.disabled = true;
+            ShoppingCartForm.ReceiverTEL.disabled = true;
+        } else {
+            ShoppingCartForm.ReceiverType.value = 1;
+            ShoppingCartForm.Receiver.value = '';
+            ShoppingCartForm.ReceiverTEL.value = '';
+            ShoppingCartForm.Receiver.disabled = false;
+            ShoppingCartForm.ReceiverTEL.disabled = false;
+        }
+
+    }
+
+    function MoveScrollBar(obj, extraTop) {
+
+        var offsetTop = $(obj).offset().top;
+
+        //if header is not fixed by js change
+        var menuTopPos = document.getElementById('MainMenutopListArea').style.position;
+
+        if (menuTopPos == 'fixed') {
+            offsetTop -= 20;  ////adjust position
+        } else {
+            offsetTop -= 100;
+        }
+
+        if (typeof extraTop !== 'undefined')
+            offsetTop += extraTop;
+
+        $("body, html").delay(800).animate({ scrollTop: offsetTop }, 500);
+
+    }
+
+    function getValueFromRadioButton(name) {
+        //Get all elements with the name
+        var buttons = document.getElementsByName(name);
+        for (var i = 0; i < buttons.length; i++) {
+            //Check if button is checked
+            var button = buttons[i];
+            if (button.checked) {
+                //Return value
+                return button.value;
+            }
+        }
+        //No radio button is selected. 
+        return null;
+    }
+
+    function setCheckedValueOfRadioButtonGroup(name, vValue) {
+        var radios = document.getElementsByName(name);
+        for (var j = 0; j < radios.length; j++) {
+            if (radios[j].value == vValue) {
+                radios[j].checked = true;
+                break;
+            }
+        }
+    }
+</script>
+
+<!--[if gt IE 9]> <!---->
+<script type="text/ecmascript">
+    function textEffect(animationName, htmlTagID) {
+
+        var CartTitle = document.getElementById(htmlTagID);
+        var text = CartTitle.innerHTML,
+              chars = text.length,
+              newText = '',
+              animation = animationName,
+              char,
+              i;
+
+        for (i = 0; i < chars; i += 1) {
+            newText += '<i>' + text.charAt(i) + '</i>';
+        }
+
+        CartTitle.innerHTML = newText;
+
+        var wrappedChars = CartTitle.getElementsByTagName('i'),
+            wrappedCharsLen = wrappedChars.length,
+            j = 0;
+
+        function addEffect() {
+            //setInterval(function () {
+            setTimeout(function () {
+                try {
+                    wrappedChars[j].className = animation;
+                    j += 1;
+                    if (j < wrappedCharsLen) {
+                        addEffect();
+                    }
+                } catch (ex) {
+                    console.log(ex.message);
+                }
+            }, 300)
+        }
+
+        addEffect();
+
+    };
+
+    var chineseRange = [
+  [0x4e00, 0x9fff], // CJK Unified Ideographs
+  [0x3400, 0x4dbf], // CJK Unified Ideographs Extension A
+  [0x20000, 0x2a6df], // CJK Unified Ideographs Extension B
+  [0x2a700, 0x2b73f], // CJK Unified Ideographs Extension C
+  [0x2b740, 0x2b81f], // CJK Unified Ideographs Extension D
+  [0x2b820, 0x2ceaf], // CJK Unified Ideographs Extension E
+  [0xf900, 0xfaff], // CJK Compatibility Ideographs
+
+  [0x3300, 0x33ff], // https://en.wikipedia.org/wiki/CJK_Compatibility
+  [0xfe30, 0xfe4f], // https://en.wikipedia.org/wiki/CJK_Compatibility_Forms
+  [0xf900, 0xfaff], // https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs
+  [0x2f800, 0x2fa1f], // https://en.wikipedia.org/wiki/CJK_Compatibility_Ideographs_Supplement
+    ];
+
+    var isChinese = function (str) {
+
+        var charCode;
+        var flag;
+        var range;
+
+        for (var i = 0; i < str.length;) {
+            charCode = str.codePointAt(i);
+            flag = false;
+
+            for (var j = 0; j < chineseRange.length; j++) {
+                range = chineseRange[j];
+                if (charCode >= range[0] && charCode <= range[1]) {
+                    flag = true;
+                    break;
+                }
+            }
+
+            if (!flag) {
+                return false;
+            }
+
+            if (charCode <= 0xffff) {
+                i++
+            } else {
+                i += 2
+            }
+        }
+
+        return true;
+    }
+
+</script>
+
+<style>
+    i {
+        display: inline-block;
+        font-style: normal;
+        -webkit-transform: scale(0) translate3d(0, 0px, 0);
+        -moz-transform: scale(0) translate3d(0, 0px, 0);
+        -ms-transform: scale(0) translate3d(0, 0px, 0);
+        -o-transform: scale(0) translate3d(0, 0px, 0);
+        transform: scale(0) translate3d(0, 0px, 0);
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+    }
+
+        i.fly-in-out {
+            -webkit-animation: fly-in-out 6s infinite ease-in-out;
+            -moz-animation: fly-in-out 6s infinite ease-in-out;
+            -o-animation: fly-in-out 6s infinite ease-in-out;
+            animation: fly-in-out 6s infinite ease-in-out;
+        }
+
+    @-webkit-keyframes fly-in-out {
+        0% {
+            -webkit-transform: scale(0) translate3d(0, 0px, 0);
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 100px 100px rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+        }
+
+        15%, 85% {
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            -webkit-transform: scale(1) translate3d(0, 0, 0);
+            background: transparent;
+            box-shadow: none;
+        }
+
+        100% {
+            color: transparent;
+            -webkit-transform: scale(0) translate3d(0, 0px, 0);
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 100px 100px rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+        }
+    }
+
+    @-moz-keyframes fly-in-out {
+        0% {
+            -moz-transform: scale(0) translate3d(0, 0px, 0);
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 100px 100px rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+        }
+
+        15%, 85% {
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            -moz-transform: scale(1) translate3d(0, 0, 0);
+            background: transparent;
+            box-shadow: none;
+        }
+
+        100% {
+            color: transparent;
+            -moz-transform: scale(0) translate3d(0, 0px, 0);
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 100px 100px rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+        }
+    }
+
+    @keyframes fly-in-out {
+        0% {
+            transform: scale(0) translate3d(0, 0px, 0);
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 100px 100px rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+        }
+
+        15%, 85% {
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            transform: scale(1) translate3d(0, 0, 0);
+            background: transparent;
+            box-shadow: none;
+        }
+
+        100% {
+            /*color: transparent;*/
+            transform: scale(0) translate3d(0, 0px, 0);
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 100px 100px rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+        }
+    }
+</style>
+<![endif]-->
+
