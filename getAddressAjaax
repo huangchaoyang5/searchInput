@@ -1,0 +1,77 @@
+<%@ Page Language="vb" ContentType="application/json; charset=utf-8" %>
+
+<%@ Import Namespace="Newtonsoft.Json.Linq" %>
+
+<%@ OutputCache Duration="1" VaryByParam="*" %>
+<%@ Import Namespace="System.Configuration" %>
+<%@ Import Namespace="System.IO" %>
+<%@ Import Namespace="System.Data.sqlclient" %>
+<%@ Import Namespace="eVistualFunction.Grid_Function" %>
+<%@ Import Namespace="System.Xml" %>
+<%@ Import Namespace="System.Configuration" %>
+<%@ Import Namespace="Newtonsoft.Json" %>
+
+<script runat="server">
+
+    Sub Page_Load(ByVal Sender As Object, ByVal E As EventArgs)
+
+        ' 定義自己所使用的Name Space
+        Dim gridObj As eVistualFunction.Grid_Function = New eVistualFunction.Grid_Function
+        gridObj.MyPage = Me
+
+        Dim serializer As New System.Web.Script.Serialization.JavaScriptSerializer()
+        Dim address As String = gridObj.CheckRequestData("address")
+        Dim ResultString = ""
+         
+        If Not String.IsNullOrEmpty(address) And address.Length > 3 Then
+            
+            Try
+
+                Dim tempData = ""
+                Using r As New StreamReader(Server.MapPath("~/address.json"))
+                    tempData = r.ReadToEnd()
+                End Using
+                
+                Dim city = address.Substring(0, 3).Replace("台", "臺")
+                Dim area = ""
+                Dim road = ""
+                
+                If Not String.IsNullOrEmpty(tempData) Then
+                    Dim datas = JsonConvert.DeserializeObject(Of List(Of jsonAddress))(tempData)
+                    Dim listobj = datas.Where(Function(x) x.City.Equals(city))
+                    ''''if area only two word
+                    Dim areaCnt = 2
+                    area = address.Substring(3, areaCnt).Replace("台", "臺")
+                    listobj = listobj.Where(Function(x) x.Area.Equals(area))
+                    If listobj.Count = 0 Then
+                        areaCnt = 3
+                        area = address.Substring(3, 3).Replace("台", "臺")
+                        listobj = listobj.Where(Function(x) x.Area.Equals(area))
+                    End If
+                    
+                    road = address.Substring((areaCnt + 3)).Replace("台", "臺")  'add city count
+                    listobj = listobj.Where(Function(x) x.Road.StartsWith(road) And Not x.Road.Equals(road))
+                    ResultString = serializer.Serialize(listobj.Select(Function(x) address.Substring(0, 3) & address.Substring(3, areaCnt) & x.Road).Distinct.ToList())
+                End If
+                
+            Catch ex As Exception
+                Dim test = ex.Message
+            End Try
+               
+        End If
+            
+        ResultString = ResultString.Replace("""@", """")
+        Response.Write(ResultString)
+        
+    End Sub
+    
+    Private Class jsonAddress
+        Public Zip5 As String
+        Public City As String
+        Public Area As String
+        Public Road As String
+        Public Scope As String = ""
+    End Class
+    
+    
+</script>
