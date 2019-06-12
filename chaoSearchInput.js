@@ -200,7 +200,7 @@ if (!Array.prototype.filter) {
             isMouseOverResult = false;
         };
 
-        var ajaxStopLoading = false;
+        var chaoSearchAjaxCall;
 
         function eleInputBehavior(obj, e) {
 
@@ -297,6 +297,10 @@ if (!Array.prototype.filter) {
             var resultTag = document.getElementById(obj.id + 'Result');
             resultTag.innerHTML = '';
 
+            if (chaoSearchAjaxCall != null) {
+                chaoSearchAjaxCall.abort();
+            }
+
             if (opts.taiwanCity) {
 
                 var isFirst = true;
@@ -339,9 +343,9 @@ if (!Array.prototype.filter) {
                     $(resultTag).scrollTop(0);
                 } else {
                     //find address name if city and area are exist by ajax call                   
-                    if (opts.ajaxUrl.length > 0 && obj.value.trim().length >= 6) {
+                    if (opts.ajaxUrl.length > 0 && obj.value.trim().length >= 5) {
 
-                        $.getJSON(opts.ajaxUrl + encodeURI(obj.value.trim()), null, function (datas) {
+                        chaoSearchAjaxCall = $.getJSON(opts.ajaxUrl + encodeURI(obj.value.trim()), null, function (datas) {
 
                             if (datas == "" || datas == null) {
                                 $(resultTag).hide();
@@ -350,11 +354,13 @@ if (!Array.prototype.filter) {
                             }
 
                         });
+
                     }
+
                 }
             } else if (opts.hasAjax) {
 
-                $.getJSON(opts.ajaxUrl + encodeURI(obj.value.trim()), null, function (datas) {
+                chaoSearchAjaxCall = $.getJSON(opts.ajaxUrl + encodeURI(obj.value.trim()), null, function (datas) {
                     if (datas == "" || datas == null) {
                         $(resultTag).hide();
                     } else {
