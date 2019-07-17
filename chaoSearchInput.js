@@ -109,6 +109,12 @@ if (!Array.prototype.filter) {
         eleInput.required = opts.inputRequired;
         $(this).append(eleInput);
 
+        var loadingSpan = document.createElement('span');
+        loadingSpan.style.cssText = opts.inputStyle;
+        loadingSpan.style.color = 'red';
+        loadingSpan.style.display = 'none';
+        $(this).append(loadingSpan);
+
         $(this).append("<br />");  //make div result under the input for ie browser
 
         //create searchResult
@@ -139,16 +145,21 @@ if (!Array.prototype.filter) {
 
         //behavior
         var isMouseOverResult = false;
+        
         $(eleInput).focusout(function () {
             if (isMouseOverResult && !opts.hasAjax) {
-                $(eleInput).focus();
+                if (navigator.userAgent.indexOf("Firefox") > -1)
+                    setTimeout(function () { $(eleInput).focus(); }, 100);
+                else
+                    $(eleInput).focus();
+
                 isMouseOverResult = false;
                 return;
             }
 
             $(eleInputResult).hide();
         });
-
+       
         eleInput.onfocus = function (e) {
 
             eleInput.placeholder
@@ -156,9 +167,14 @@ if (!Array.prototype.filter) {
             if (typeof e === 'undefined')
                 e = event;
 
+            var resultTag = document.getElementById(this.id + 'Result');
+            var onSelected = $(resultTag).find("div.onSelected");
+
             var loadData = eleInputBehavior(this, e);
-            if (loadData)
+            if (loadData) {
                 CreateSelectResult(this, opts.taiwanCity, opts.hasAjax);
+            }
+
         };
 
         //specal case for enter key
@@ -170,6 +186,13 @@ if (!Array.prototype.filter) {
             }
 
             var resultTag = document.getElementById(this.id + 'Result');
+
+            //找尋縣市時中文字會有Enter確認字時charCode會等同上一個charCode要另做判斷
+            if ($(resultTag).find("div").length == 0 && this.value.length < 6) {
+                $(resultTag).hide();
+                CreateSelectResult(this, opts.taiwanCity, opts.hasAjax);
+                return;
+            }
 
             //hit enter
             if (charCode == 13 && $(resultTag).is(":visible")) {
@@ -186,7 +209,6 @@ if (!Array.prototype.filter) {
 
             if (typeof e === 'undefined')
                 e = event;
-
             var loadData = eleInputBehavior(this, e);
             if (loadData)
                 CreateSelectResult(this, opts.taiwanCity, opts.hasAjax);
@@ -221,7 +243,6 @@ if (!Array.prototype.filter) {
 
                 //hit enter
                 if (charCode == 13) {
-
                     var onSelected = $(resultTag).find("div.onSelected");
                     if (onSelected.length != 0) {
                         obj.value = onSelected[0].innerText.trim();
@@ -322,7 +343,7 @@ if (!Array.prototype.filter) {
                     div.onmousedown = function () {
                         obj.value = this.innerText.trim();
                         $(resultTag).hide();
-                        $(obj).focus();
+                        //$(obj).focus();  In this event input is already focusout check foucuseout event 
                     };
                     div.onmouseover = function () {
                         var addressDiv = resultTag.getElementsByTagName('div');
@@ -342,18 +363,37 @@ if (!Array.prototype.filter) {
                     $(resultTag).show();
                     $(resultTag).scrollTop(0);
                 } else {
+
                     //find address name if city and area are exist by ajax call                   
-                    if (opts.ajaxUrl.length > 0 && obj.value.trim().length >= 5) {
-
-                        chaoSearchAjaxCall = $.getJSON(opts.ajaxUrl + encodeURI(obj.value.trim()), null, function (datas) {
-
-                            if (datas == "" || datas == null) {
-                                $(resultTag).hide();
-                            } else {
-                                appendAjaxHint(obj, datas, isFirst, resultTag);
+                    if (opts.ajaxUrl.length > 0 && IsFindTaiwanCityAndArea(obj.value)) {
+                        chaoSearchAjaxCall = $.ajax({
+                            dataType: "json",
+                            url: opts.ajaxUrl + encodeURI(obj.value.trim()),
+                            data: self.ratings,
+                            beforeSend: function () {
+                                loadingTextEffect(true);
+                            },
+                            success: function (datas) {
+                                if (datas == "" || datas == null) {
+                                    $(resultTag).hide();
+                                } else {
+                                    appendAjaxHint(obj, datas, isFirst, resultTag);
+                                }
+                            },
+                            complete: function () {
+                                loadingTextEffect(false);
                             }
-
                         });
+
+                        //chaoSearchAjaxCall = $.getJSON(opts.ajaxUrl + encodeURI(obj.value.trim()), null, function (datas) {
+                        //    console.log('start');
+                        //    if (datas == "" || datas == null) {
+                        //        $(resultTag).hide();
+                        //    } else {
+                        //        appendAjaxHint(obj, datas, isFirst, resultTag);
+                        //    }
+
+                        //}).done(function () { console.log('done'); }).always(function () { console.log('always'); });
 
                     }
 
@@ -428,6 +468,33 @@ if (!Array.prototype.filter) {
 
         }
 
+        var loadingTextEffectInterval;
+        function loadingTextEffect(isOn) {
+            if (isOn) {
+                $(loadingSpan).show();
+                var textArray = new Array("Loading", "。", "。", "。");
+                var i = 0;
+                loadingTextEffectInterval = setInterval(function () {
+
+                    if (i == 0)
+                        loadingSpan.innerHTML = "";
+
+                    if (i < textArray.length)
+                        loadingSpan.innerHTML += textArray[i];
+
+                    if (i < textArray.length)
+                        i += 1;
+                    else
+                        i = 0;                  
+                }, 100);
+            } else {
+                if (loadingTextEffectInterval != null) {
+                    clearInterval(loadingTextEffectInterval);
+                }
+                $(loadingSpan).hide();
+            }
+        }
+
         RegExp.quote = function (str) {
             return (str + '').replace(/[.?*+^$[\]\\(){}|-]/g, "\\$&");
         };
@@ -438,6 +505,19 @@ if (!Array.prototype.filter) {
 })(jQuery);
 
 /////////////////////////////////////////////////city and area//////////////////////////////////////
+function IsFindTaiwanCityAndArea(text) {
+
+    var tempAddress = text.trim();
+    var areas = taiwanCityAndArea(tempAddress.substr(0, 3));
+    var list1 = areas.filter(function (x) { return x == tempAddress.substr(0, 6) })
+    var list2 = areas.filter(function (x) { return x == tempAddress.substr(0, 5) }) //當區域只有兩個字
+
+    if (list1.length > 0 || list2.length > 0)
+        return true;
+
+    return false;
+}
+
 function taiwanCityAndArea(text) {
     var citys = ["台北市", "新北市", "基隆市", "宜蘭縣", "新竹市", "新竹縣", "桃園市", "苗栗縣", "台中市", "彰化縣", "南投縣", "雲林縣", "嘉義市", "嘉義縣", "台南市", "高雄市", "屏東縣", "台東縣", "花蓮縣", "澎湖縣", "金門縣", "連江縣"];
     var areas = [];
