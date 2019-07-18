@@ -105,6 +105,7 @@ if (!Array.prototype.filter) {
         eleInput.autocomplete = 'off';
         eleInput.style.display = 'inline-block';
         eleInput.style.cssText += ';' + opts.inputStyle;
+        eleInput.defaultValue = opts.inputValue;
         eleInput.value = opts.inputValue;
         eleInput.required = opts.inputRequired;
         $(this).append(eleInput);
@@ -145,7 +146,7 @@ if (!Array.prototype.filter) {
 
         //behavior
         var isMouseOverResult = false;
-        
+
         $(eleInput).focusout(function () {
             if (isMouseOverResult && !opts.hasAjax) {
                 if (navigator.userAgent.indexOf("Firefox") > -1)
@@ -159,7 +160,7 @@ if (!Array.prototype.filter) {
 
             $(eleInputResult).hide();
         });
-       
+
         eleInput.onfocus = function (e) {
 
             eleInput.placeholder
@@ -485,7 +486,7 @@ if (!Array.prototype.filter) {
                     if (i < textArray.length)
                         i += 1;
                     else
-                        i = 0;                  
+                        i = 0;
                 }, 100);
             } else {
                 if (loadingTextEffectInterval != null) {
