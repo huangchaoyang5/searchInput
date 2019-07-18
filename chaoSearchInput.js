@@ -180,7 +180,7 @@ if (!Array.prototype.filter) {
 
         //specal case for enter key
         eleInput.onkeydown = function (e) {
-
+            e.preventDefault
             var charCode = 0;
             if (typeof e !== 'undefined') {
                 charCode = (typeof e.which === "number") ? e.which : e.keyCode;
@@ -192,6 +192,11 @@ if (!Array.prototype.filter) {
             if ($(resultTag).find("div").length == 0 && this.value.length < 6) {
                 $(resultTag).hide();
                 CreateSelectResult(this, opts.taiwanCity, opts.hasAjax);
+                return;
+            }
+
+            if ((charCode == 38 || charCode == 40) && $(resultTag).is(":visible")) {
+                eleInputBehavior(this, e);
                 return;
             }
 
@@ -210,6 +215,7 @@ if (!Array.prototype.filter) {
 
             if (typeof e === 'undefined')
                 e = event;
+
             var loadData = eleInputBehavior(this, e);
             if (loadData)
                 CreateSelectResult(this, opts.taiwanCity, opts.hasAjax);
@@ -226,6 +232,8 @@ if (!Array.prototype.filter) {
         var chaoSearchAjaxCall;
 
         function eleInputBehavior(obj, e) {
+
+            e.preventDefault();
 
             var charCode = 0;
             if (typeof e !== 'undefined') {
@@ -260,9 +268,10 @@ if (!Array.prototype.filter) {
 
                 }
 
-                if (charCode == 38 || charCode == 40) {
 
-                    if (resultTag.style.display != 'none') {
+                if ((charCode == 38 || charCode == 40)) {
+
+                    if (resultTag.style.display != 'none' && e.type == 'keydown') {
 
                         var onSelected = $(resultTag).find("div.onSelected");
                         if (onSelected.length == 0) {
@@ -299,6 +308,8 @@ if (!Array.prototype.filter) {
 
                         return false; //select by up and dowm
                     }
+
+                    return false;
                 }
 
             } else {
