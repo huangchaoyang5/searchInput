@@ -1,5 +1,6 @@
 /* Copyright 2018 chaoyang huang   
 *　source code link ==> https://github.com/huangchaoyang5/searchInput
+*  add taiwanPhoneCheck function
 */
 
 if (typeof String.prototype.trim !== 'function') {
@@ -583,3 +584,53 @@ function taiwanCityAndArea(text) {
         }
     }
 }
+
+/////////////////////////////////////////////////taiwanese phone//////////////////////////////////////
+
+function taiwanPhoneCheck(phone, hasExtnet) {
+        var message = '';
+        var numbers = phone;
+
+        if (hasExtnet) {
+            var lastIndex = phone.indexOf('#');
+            if (lastIndex > 0) {
+                numbers = phone.substr(0, lastIndex);
+            }
+        }
+
+        numbers = numbers.replace(/[^0-9.]/g, "");
+
+        switch (numbers.length) {
+            case 10:
+                if (hasExtnet)
+                    regex = /^[(]{0,1}[0-9]{2}[)]{0,1}[-\s\.]{0,1}[0-9]{4}[-\s\.]{0,1}[0-9]{4}(#\d+)?$/;
+                else
+                    regex = /^[(]{0,1}[0-9]{2}[)]{0,1}[-\s\.]{0,1}[0-9]{4}[-\s\.]{0,1}[0-9]{4}$/;
+                break;
+            default:
+                if (numbers.indexOf('0836') == 0) {
+                    if (hasExtnet)
+                        regex = /^[(]{0,1}[0-9]{4}[)]{0,1}[-\s\.]{0,1}[0-9]{1}[-\s\.]{0,1}[0-9]{4}(#\d+)?$/;
+                    else
+                        regex = /^[(]{0,1}[0-9]{4}[)]{0,1}[-\s\.]{0,1}[0-9]{1}[-\s\.]{0,1}[0-9]{4}$/;
+                } else if (numbers.indexOf('037') == 0 || numbers.indexOf('049') == 0 || numbers.indexOf('082') == 0 || numbers.indexOf('089') == 0) {
+                    if (hasExtnet)
+                        regex = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{2}[-\s\.]{0,1}[0-9]{4}(#\d+)?$/;
+                    else
+                        regex = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{2}[-\s\.]{0,1}[0-9]{4}$/;
+                } else {
+                    if (hasExtnet)
+                        regex = /^[(]{0,1}[0-9]{2}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}(#\d+)?$/;
+                    else
+                        regex = /^[(]{0,1}[0-9]{2}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
+                }
+                break;
+
+        }
+
+        if (!regex.test(phone)) {
+            message = '聯絡電話輸入錯誤或室內電話未加區碼，請檢查。';
+        }
+
+        return message;
+    }
