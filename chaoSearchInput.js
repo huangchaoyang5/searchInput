@@ -1,6 +1,5 @@
 /* Copyright 2018 chaoyang huang   
 *　source code link ==> https://github.com/huangchaoyang5/searchInput
-*  add taiwanPhoneCheck function
 */
 
 if (typeof String.prototype.trim !== 'function') {
@@ -164,8 +163,6 @@ if (!Array.prototype.filter) {
 
         eleInput.onfocus = function (e) {
 
-            eleInput.placeholder
-
             if (typeof e === 'undefined')
                 e = event;
 
@@ -219,7 +216,7 @@ if (!Array.prototype.filter) {
 
             var loadData = eleInputBehavior(this, e);
             if (loadData)
-                CreateSelectResult(this, opts.taiwanCity, opts.hasAjax);
+                CreateSelectResult(this, opts.taiwanCity, opts.hasAjax);     
         };
 
         eleInputResult.onmouseover = function () {
@@ -412,15 +409,17 @@ if (!Array.prototype.filter) {
 
                 }
             } else if (opts.hasAjax) {
-
-                chaoSearchAjaxCall = $.getJSON(opts.ajaxUrl + encodeURI(obj.value.trim()), null, function (datas) {
-                    if (datas == "" || datas == null) {
-                        $(resultTag).hide();
-                    } else {
-                        appendAjaxHint(obj, datas, isFirst, resultTag);
-                    }
-                });
-
+                if (obj.value.trim() != '') {
+                    loadingTextEffect(true);
+                    chaoSearchAjaxCall = $.getJSON(opts.ajaxUrl + encodeURI(obj.value.trim()), null, function (datas) {
+                        if (datas == "" || datas == null) {
+                            $(resultTag).hide();
+                        } else {
+                            appendAjaxHint(obj, datas, isFirst, resultTag);
+                        }
+                        loadingTextEffect(false);
+                    });
+                }
             }
         }
 
@@ -462,6 +461,7 @@ if (!Array.prototype.filter) {
                 div.onmousedown = function () {
                     obj.value = this.innerText.trim();
                     $(resultTag).hide();
+                    $(obj).change(); //trigger the event if the event has an acton
                 };
                 div.onmouseover = function () {
                     var addressDiv = resultTag.getElementsByTagName('div');
@@ -586,51 +586,50 @@ function taiwanCityAndArea(text) {
 }
 
 /////////////////////////////////////////////////taiwanese phone//////////////////////////////////////
-
 function taiwanPhoneCheck(phone, hasExtnet) {
-        var message = '';
-        var numbers = phone;
+    var message = '';
+    var numbers = phone;
 
-        if (hasExtnet) {
-            var lastIndex = phone.indexOf('#');
-            if (lastIndex > 0) {
-                numbers = phone.substr(0, lastIndex);
-            }
+    if (hasExtnet) {
+        var lastIndex = phone.indexOf('#');
+        if (lastIndex > 0) {
+            numbers = phone.substr(0, lastIndex);
         }
-
-        numbers = numbers.replace(/[^0-9.]/g, "");
-
-        switch (numbers.length) {
-            case 10:
-                if (hasExtnet)
-                    regex = /^[(]{0,1}[0-9]{2}[)]{0,1}[-\s\.]{0,1}[0-9]{4}[-\s\.]{0,1}[0-9]{4}(#\d+)?$/;
-                else
-                    regex = /^[(]{0,1}[0-9]{2}[)]{0,1}[-\s\.]{0,1}[0-9]{4}[-\s\.]{0,1}[0-9]{4}$/;
-                break;
-            default:
-                if (numbers.indexOf('0836') == 0) {
-                    if (hasExtnet)
-                        regex = /^[(]{0,1}[0-9]{4}[)]{0,1}[-\s\.]{0,1}[0-9]{1}[-\s\.]{0,1}[0-9]{4}(#\d+)?$/;
-                    else
-                        regex = /^[(]{0,1}[0-9]{4}[)]{0,1}[-\s\.]{0,1}[0-9]{1}[-\s\.]{0,1}[0-9]{4}$/;
-                } else if (numbers.indexOf('037') == 0 || numbers.indexOf('049') == 0 || numbers.indexOf('082') == 0 || numbers.indexOf('089') == 0) {
-                    if (hasExtnet)
-                        regex = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{2}[-\s\.]{0,1}[0-9]{4}(#\d+)?$/;
-                    else
-                        regex = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{2}[-\s\.]{0,1}[0-9]{4}$/;
-                } else {
-                    if (hasExtnet)
-                        regex = /^[(]{0,1}[0-9]{2}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}(#\d+)?$/;
-                    else
-                        regex = /^[(]{0,1}[0-9]{2}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
-                }
-                break;
-
-        }
-
-        if (!regex.test(phone)) {
-            message = '聯絡電話輸入錯誤或室內電話未加區碼，請檢查。';
-        }
-
-        return message;
     }
+
+    numbers = numbers.replace(/[^0-9.]/g, "");
+
+    switch (numbers.length) {
+        case 10:
+            if (hasExtnet)
+                regex = /^[(]{0,1}[0-9]{2}[)]{0,1}[-\s\.]{0,1}[0-9]{4}[-\s\.]{0,1}[0-9]{4}(#\d+)?$/;
+            else
+                regex = /^[(]{0,1}[0-9]{2}[)]{0,1}[-\s\.]{0,1}[0-9]{4}[-\s\.]{0,1}[0-9]{4}$/;
+            break;
+        default:
+            if (numbers.indexOf('0836') == 0) {
+                if (hasExtnet)
+                    regex = /^[(]{0,1}[0-9]{4}[)]{0,1}[-\s\.]{0,1}[0-9]{1}[-\s\.]{0,1}[0-9]{4}(#\d+)?$/;
+                else
+                    regex = /^[(]{0,1}[0-9]{4}[)]{0,1}[-\s\.]{0,1}[0-9]{1}[-\s\.]{0,1}[0-9]{4}$/;
+            } else if (numbers.indexOf('037') == 0 || numbers.indexOf('049') == 0 || numbers.indexOf('082') == 0 || numbers.indexOf('089') == 0) {
+                if (hasExtnet)
+                    regex = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{2}[-\s\.]{0,1}[0-9]{4}(#\d+)?$/;
+                else
+                    regex = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{2}[-\s\.]{0,1}[0-9]{4}$/;
+            } else {
+                if (hasExtnet)
+                    regex = /^[(]{0,1}[0-9]{2}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}(#\d+)?$/;
+                else
+                    regex = /^[(]{0,1}[0-9]{2}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
+            }
+            break;
+
+    }
+
+    if (!regex.test(phone)) {
+        message = '聯絡電話輸入錯誤或室內電話未加區碼，請檢查。';
+    }
+
+    return message;
+}
