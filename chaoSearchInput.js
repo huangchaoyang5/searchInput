@@ -378,7 +378,7 @@ if (!Array.prototype.filter) {
                     if (opts.ajaxUrl.length > 0 && IsFindTaiwanCityAndArea(obj.value)) {
                         chaoSearchAjaxCall = $.ajax({
                             dataType: "json",
-                            url: opts.ajaxUrl + encodeURI(obj.value.trim()),
+                            url: opts.ajaxUrl + encodeURIComponent(obj.value.trim()),
                             data: self.ratings,
                             beforeSend: function () {
                                 loadingTextEffect(true);
@@ -411,7 +411,7 @@ if (!Array.prototype.filter) {
             } else if (opts.hasAjax) {
                 if (obj.value.trim() != '') {
                     loadingTextEffect(true);
-                    chaoSearchAjaxCall = $.getJSON(opts.ajaxUrl + encodeURI(obj.value.trim()), null, function (datas) {
+                    chaoSearchAjaxCall = $.getJSON(opts.ajaxUrl + encodeURIComponent(obj.value.trim()), null, function (datas) {
                         if (datas == "" || datas == null) {
                             $(resultTag).hide();
                         } else {
