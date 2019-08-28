@@ -8,6 +8,7 @@
 <div id="companyDiv" style="float: left; position: relative"></div>
 <div id="addressDiv" style="float: left; position: relative"></div>
 <div id="notitleDiv" style="float: left; position: relative"></div>
+<div id="editAddressDiv" style="position:relative;"></div>
     
 <script type="text/javascript">
 	$('#companyDiv').searchInput({
@@ -45,6 +46,17 @@
                 inputResultStyle: 'width:510px;left:13px;font-size: 11pt;background-color: #f0f0f0;',
                 taiwanCity: true,
                 ajaxUrl: '/API/getAddressByOrderAddress.aspx?address='
+        });
+	
+	$('#editAddressDiv').searchInput({
+            inputPlaceholder: '地址提示只有顯示縣市和區',
+            inputID: 'editAddress',
+            inputName: 'editAddress',
+            inputValue: '{Address}',
+            loadingSpanDisplayBlock: true,
+            inputResultStyle: 'width:510px;left:0px;font-size: 11pt;background-color: #f0f0f0;',
+            taiwanCity: true,
+            ajaxUrl: '/API/getAddressByOrderAddress.aspx?address='
         });
 </script>
 ```
