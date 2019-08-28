@@ -62,6 +62,7 @@ if (!Array.prototype.filter) {
             inputName: '',                             //search input tag name
             inputPlaceholder: '',
             inputStyle: '',                            //search input append or overwirte default style
+            loadingSpanDisplayBlock: false,               
             inputRequired: false,                      //search input become Required
             inputValue: '',                            //search input overwirte value
             inputResultStyle: '',                      //search result div append or overwirte default style
@@ -113,8 +114,10 @@ if (!Array.prototype.filter) {
         var loadingSpan = document.createElement('span');
         loadingSpan.style.cssText = opts.inputStyle;
         loadingSpan.style.color = 'red';
-        loadingSpan.style.display = 'none';
+        if (opts.loadingSpanDisplayBlock)
+            loadingSpan.style.display = 'block';
         $(this).append(loadingSpan);
+        $(loadingSpan).hide();
 
         $(this).append("<br />");  //make div result under the input for ie browser
 
@@ -216,7 +219,7 @@ if (!Array.prototype.filter) {
 
             var loadData = eleInputBehavior(this, e);
             if (loadData)
-                CreateSelectResult(this, opts.taiwanCity, opts.hasAjax);     
+                CreateSelectResult(this, opts.taiwanCity, opts.hasAjax);
         };
 
         eleInputResult.onmouseover = function () {
