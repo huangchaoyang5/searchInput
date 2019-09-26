@@ -62,7 +62,7 @@ if (!Array.prototype.filter) {
             inputName: '',                             //search input tag name
             inputPlaceholder: '',
             inputStyle: '',                            //search input append or overwirte default style
-            loadingSpanDisplayBlock: false,               
+            loadingSpanDisplayBlock: false,
             inputRequired: false,                      //search input become Required
             inputValue: '',                            //search input overwirte value
             inputResultStyle: '',                      //search result div append or overwirte default style
@@ -376,7 +376,7 @@ if (!Array.prototype.filter) {
                     $(resultTag).show();
                     $(resultTag).scrollTop(0);
                 } else {
-
+                    loadingTextEffect(false);
                     //find address name if city and area are exist by ajax call                   
                     if (opts.ajaxUrl.length > 0 && IsFindTaiwanCityAndArea(obj.value)) {
                         chaoSearchAjaxCall = $.ajax({
@@ -412,6 +412,7 @@ if (!Array.prototype.filter) {
 
                 }
             } else if (opts.hasAjax) {
+                loadingTextEffect(false);
                 if (obj.value.trim() != '') {
                     loadingTextEffect(true);
                     chaoSearchAjaxCall = $.getJSON(opts.ajaxUrl + encodeURIComponent(obj.value.trim()), null, function (datas) {
@@ -422,7 +423,8 @@ if (!Array.prototype.filter) {
                         }
                         loadingTextEffect(false);
                     });
-                }
+                } else
+                    $(resultTag).hide();
             }
         }
 
@@ -486,6 +488,11 @@ if (!Array.prototype.filter) {
 
         var loadingTextEffectInterval;
         function loadingTextEffect(isOn) {
+
+            if (loadingTextEffectInterval != null) {
+                clearInterval(loadingTextEffectInterval);
+            }
+
             if (isOn) {
                 $(loadingSpan).show();
                 var textArray = new Array("Loading", "。", "。", "。");
@@ -504,9 +511,6 @@ if (!Array.prototype.filter) {
                         i = 0;
                 }, 100);
             } else {
-                if (loadingTextEffectInterval != null) {
-                    clearInterval(loadingTextEffectInterval);
-                }
                 $(loadingSpan).hide();
             }
         }
