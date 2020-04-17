@@ -4,20 +4,21 @@
 1. using html5
 2. tested jquery version is jquery-1.10.2.min.js and tested on chrom, firefox, and ie10+
 3. parameter as following:
-<br/>	titleHtml: '',                             //append html string
-<br/>	inputID: '',                               //search input tag ID
-<br/>	inputName: '',                             //search input tag name
-<br/>	inputPlaceholder: '',
-<br/>	inputClass: '',                            //search input classname attribute
-<br/>	inputStyle: '',                            //search input append or overwirte default style
-<br/>	loadingSpanDisplayBlock: false,
-<br/>	inputRequired: false,                      //search input become Required
-<br/>	inputValue: '',                            //search input overwirte value
-<br/>	inputResultStyle: '',                      //search result div append or overwirte default style
-<br/>	onSelectedColorCode: '#f0e0e0',            //display color when hover the reuslt data
-<br/>	hasAjax: false,                            //if true then get search result data by $.getJSON return list of string
-<br/>	ajaxUrl: '',                               //input value will be assigned after = when calling this prototype ex: /{path}/{pageName}?{parameter}=
-<br/>	taiwanCity: false                          //if true then default method (search taiwan city and area) eventhough hasAjax parameter become true (P.S if ajaUrl is filled, find road and street by ajax)
+	titleHtml: '',                             //append html string
+	inputID: '',                               //search input tag ID
+	inputName: '',                             //search input tag name
+	inputPlaceholder: '',
+	inputClass: '',                            //search input classname attribute
+	inputStyle: '',                            //search input append or overwirte default style
+	loadingSpanDisplayBlock: false,
+	inputRequired: false,                      //search input become Required
+	inputValue: '',                            //search input overwirte value
+	inputResultStyle: '',                      //search result div append or overwirte default style
+	onSelectedColorCode: '#f0e0e0',            //display color when hover the reuslt data
+	hasAjax: false,                            //if true then get search result data by $.getJSON return list of string
+	ajaxUrl: '',                               //input value will be assigned after = when calling this prototype ex: /{path}/{pageName}?{parameter}=
+	taiwanCity: false                          //if true then default method (search taiwan city and area) eventhough hasAjax parameter become true (P.S if ajaUrl is filled, find road and street by ajax)
+
 ```````````````````````````````````````examples````````````````````````````````````````````````````````````````````````````
 <div id="companyDiv" style="float: left; position: relative"></div>
 <div id="addressDiv" style="float: left; position: relative"></div>
@@ -73,4 +74,3 @@
             ajaxUrl: '/API/getAddressByOrderAddress.aspx?address='
         });
 </script>
-```
