@@ -61,7 +61,7 @@ if (!Array.prototype.filter) {
             inputID: '',                               //search input tag ID
             inputName: '',                             //search input tag name
             inputPlaceholder: '',
-            inputClass: '',
+            inputClass: '',                            //search input classname attribute
             inputStyle: '',                            //search input append or overwirte default style
             loadingSpanDisplayBlock: false,
             inputRequired: false,                      //search input become Required
@@ -97,7 +97,6 @@ if (!Array.prototype.filter) {
             $(this).append(opts.titleHtml);
         }
 
-        debugger;
         //create input
         var eleInput = document.createElement('input');
         eleInput.id = opts.inputID;
@@ -224,6 +223,13 @@ if (!Array.prototype.filter) {
             if (loadData)
                 CreateSelectResult(this, opts.taiwanCity, opts.hasAjax);
         };
+
+        eleInput.onfocusout = function () {
+            if (chaoSearchAjaxCall != null) {
+                loadingSpan.style.display = 'none';
+                chaoSearchAjaxCall.abort();
+            }
+        }
 
         eleInputResult.onmouseover = function () {
             isMouseOverResult = true;
