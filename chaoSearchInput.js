@@ -61,6 +61,7 @@ if (!Array.prototype.filter) {
             inputID: '',                               //search input tag ID
             inputName: '',                             //search input tag name
             inputPlaceholder: '',
+            inputClass: '',
             inputStyle: '',                            //search input append or overwirte default style
             loadingSpanDisplayBlock: false,
             inputRequired: false,                      //search input become Required
@@ -96,6 +97,7 @@ if (!Array.prototype.filter) {
             $(this).append(opts.titleHtml);
         }
 
+        debugger;
         //create input
         var eleInput = document.createElement('input');
         eleInput.id = opts.inputID;
@@ -103,6 +105,7 @@ if (!Array.prototype.filter) {
         if (opts.inputPlaceholder != '')
             eleInput.placeholder = opts.inputPlaceholder;
         eleInput.type = 'text';
+        eleInput.className = opts.inputClass;
         eleInput.autocomplete = 'off';
         eleInput.style.display = 'inline-block';
         eleInput.style.cssText += ';' + opts.inputStyle;
