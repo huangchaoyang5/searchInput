@@ -148,11 +148,17 @@ if (!Array.prototype.filter) {
         eleInputResult.style.cssText += ';' + opts.inputResultStyle;
         $(this).append(eleInputResult);
 
-
+        var chaoSearchAjaxCall;
         //behavior
         var isMouseOverResult = false;
 
         $(eleInput).focusout(function () {
+
+            if (chaoSearchAjaxCall != null) {
+                loadingSpan.style.display = 'none';
+                chaoSearchAjaxCall.abort();
+            }
+
             if (isMouseOverResult && !opts.hasAjax) {
                 if (navigator.userAgent.indexOf("Firefox") > -1)
                     setTimeout(function () { $(eleInput).focus(); }, 100);
@@ -224,13 +230,6 @@ if (!Array.prototype.filter) {
                 CreateSelectResult(this, opts.taiwanCity, opts.hasAjax);
         };
 
-        eleInput.onfocusout = function () {
-            if (chaoSearchAjaxCall != null) {
-                loadingSpan.style.display = 'none';
-                chaoSearchAjaxCall.abort();
-            }
-        }
-
         eleInputResult.onmouseover = function () {
             isMouseOverResult = true;
         };
@@ -238,8 +237,6 @@ if (!Array.prototype.filter) {
         eleInputResult.onmouseout = function () {
             isMouseOverResult = false;
         };
-
-        var chaoSearchAjaxCall;
 
         function eleInputBehavior(obj, e) {
 
