@@ -185,6 +185,7 @@ if (!Array.prototype.filter) {
                 CreateSelectResult(this, opts.taiwanCity, opts.hasAjax);
             }
 
+
         };
 
         //specal case for enter key
@@ -271,8 +272,8 @@ if (!Array.prototype.filter) {
 
                     }
 
-                    $(resultTag).hide();  //when keyup event happen the result block is still display while the event is not first time
-
+                    $(resultTag).hide();
+                    return false;
                 }
 
 
@@ -323,9 +324,11 @@ if (!Array.prototype.filter) {
 
 
                 if (opts.hasAjax) {
-                    $(resultTag).hide();  //check any area find if not hide first
-                    return false;
-                }
+                    $(resultTag).hide();  //check any area find if not hide first    
+
+                    if (obj.value.trim() == '')
+                        return false;
+                }               
 
             }
 
