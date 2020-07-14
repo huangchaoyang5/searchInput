@@ -507,10 +507,14 @@ if (!Array.prototype.filter) {
                 };
                 div.onmouseover = function () {
                     var addressDiv = resultTag.getElementsByTagName('div');
+                   
                     for (var i = 0; i < addressDiv.length; i++) {
                         addressDiv[i].className = '';
+                        addressDiv[i].style.backgroundColor = '';
                     }
+                   
                     this.className = 'onSelected';
+                    this.style.backgroundColor = opts.onSelectedColorCode;
                 };
 
                 resultTag.appendChild(div);
