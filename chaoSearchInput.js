@@ -151,6 +151,7 @@ if (!Array.prototype.filter) {
         var chaoSearchAjaxCall;
         //behavior
         var isMouseOverResult = false;
+        var iskeyDownChinese = false;
 
         $(eleInput).focusout(function () {
 
@@ -188,14 +189,15 @@ if (!Array.prototype.filter) {
 
         };
 
-        //specal case for enter key
+        //when choice autocomplete
         eleInput.onkeydown = function (e) {
-            
+           //before charcode into input
             var charCode = 0;
             if (typeof e !== 'undefined') {
                 charCode = (typeof e.which === "number") ? e.which : e.keyCode;
             }
-
+ 
+            iskeyDownChinese = false;
             var resultTag = document.getElementById(this.id + 'Result');
 
             //找尋縣市時中文字會有Enter確認字時charCode會等同上一個charCode要另做判斷
@@ -219,16 +221,23 @@ if (!Array.prototype.filter) {
                 return false;
             }
 
+            var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+            var isIE = (navigator.userAgent.toLowerCase().indexOf('msie ') > -1 || navigator.userAgent.toLowerCase().indexOf('trident/') > -1); //ie 10 or oderder || ie 11
+            if (charCode == 229 && (isFirefox || isIE)) {
+                iskeyDownChinese = true;
+            }
+
         };
 
-        eleInput.onkeyup = function (e) {
-
+        eleInput.onkeyup = function (e) {   
+            //after charcode into input
             if (typeof e === 'undefined')
                 e = event;
-
+           
             var loadData = eleInputBehavior(this, e);
             if (loadData)
                 CreateSelectResult(this, opts.taiwanCity, opts.hasAjax);
+
         };
 
         eleInput.onclick = function () {
@@ -250,7 +259,7 @@ if (!Array.prototype.filter) {
         };
 
         function eleInputBehavior(obj, e) {
-
+           
             e.preventDefault();
 
             var charCode = 0;
@@ -272,16 +281,20 @@ if (!Array.prototype.filter) {
                     $(resultTag).html('');
                     return false;
                 }
-
+               
                 //hit enter
                 if (charCode == 13) {
-                    var onSelected = $(resultTag).find("div.onSelected");                 
-                    if (onSelected.length != 0) {
-                        obj.value = onSelected[0].innerText.trim();
-                        $(resultTag).html('');
-                    }
 
-                    $(resultTag).hide();
+                    if (!iskeyDownChinese) {
+
+                        var onSelected = $(resultTag).find("div.onSelected");
+                        if (onSelected.length != 0) {
+                            obj.value = onSelected[0].innerText.trim();
+                            $(resultTag).html('');
+                        }
+
+                        $(resultTag).hide();
+                    }
 
                     //if it's ajax call don't need to search again
                     if (opts.taiwanCity) {
