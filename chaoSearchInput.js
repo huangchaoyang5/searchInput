@@ -214,12 +214,13 @@ if (!Array.prototype.filter) {
 
             //hit enter
             if (charCode == 13 && $(resultTag).is(":visible")) {
-                var onSelected = $(this).find("div.onSelected");
-                if (onSelected.length != 0) {
-                    obj.value = onSelected[0].innerText.trim();
-                }
-                return false;
+                var onSelected = $(resultTag).find("div.onSelected");
+                if (onSelected.length == 0)
+                    return true;
+                else
+                    return false;
             }
+
 
             var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
             var isIE = (navigator.userAgent.toLowerCase().indexOf('msie ') > -1 || navigator.userAgent.toLowerCase().indexOf('trident/') > -1); //ie 10 or oderder || ie 11
