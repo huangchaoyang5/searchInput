@@ -207,25 +207,39 @@ if (!Array.prototype.filter) {
                 return;
             }
 
-            if ((charCode == 38 || charCode == 40) && $(resultTag).is(":visible")) {
-                eleInputBehavior(this, e);
-                return;
-            }
-
-            //hit enter
-            if (charCode == 13 && $(resultTag).is(":visible")) {
-                var onSelected = $(resultTag).find("div.onSelected");
-                if (onSelected.length == 0)
-                    return true;
-                else
-                    return false;
-            }
-
 
             var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
             var isIE = (navigator.userAgent.toLowerCase().indexOf('msie ') > -1 || navigator.userAgent.toLowerCase().indexOf('trident/') > -1); //ie 10 or oderder || ie 11
             if (charCode == 229 && (isFirefox || isIE)) {
                 iskeyDownChinese = true;
+            }
+
+          
+            if (charCode == 229 && e.code == 'Enter') {
+
+                //keyup not fired write myself
+                var oldValue = this.value;
+                var tempInput = this;
+                setTimeout(function () {
+                    if(oldValue != tempInput.value)
+                        CreateSelectResult(tempInput);
+                }, 100);
+                return false;
+            }
+
+            if ((charCode == 38 || charCode == 40) && $(resultTag).is(":visible")) {
+                //eleInputBehavior(this, e);
+                return;
+            }
+
+            //hit enter
+            if (charCode == 13 && $(resultTag).is(":visible")) {
+               
+                var onSelected = $(resultTag).find("div.onSelected");
+                if (onSelected.length == 0)
+                    return true;
+                else
+                    return false;
             }
 
         };
@@ -234,7 +248,7 @@ if (!Array.prototype.filter) {
             //after charcode into input
             if (typeof e === 'undefined')
                 e = event;
-           
+
             var loadData = eleInputBehavior(this, e);
             if (loadData)
                 CreateSelectResult(this, opts.taiwanCity, opts.hasAjax);
@@ -285,7 +299,7 @@ if (!Array.prototype.filter) {
                
                 //hit enter
                 if (charCode == 13) {
-
+                    
                     if (!iskeyDownChinese) {
 
                         var onSelected = $(resultTag).find("div.onSelected");
@@ -304,7 +318,6 @@ if (!Array.prototype.filter) {
 
                     return false;
                 }
-
 
                 if ((charCode == 38 || charCode == 40)) {
 
