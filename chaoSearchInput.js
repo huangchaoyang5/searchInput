@@ -216,7 +216,6 @@ if (!Array.prototype.filter) {
 
           
             if (charCode == 229 && e.code == 'Enter') {
-
                 //keyup not fired write myself
                 var oldValue = this.value;
                 var tempInput = this;
@@ -228,7 +227,7 @@ if (!Array.prototype.filter) {
             }
 
             if ((charCode == 38 || charCode == 40) && $(resultTag).is(":visible")) {
-                //eleInputBehavior(this, e);
+                eleInputBehavior(this, e);
                 return;
             }
 
